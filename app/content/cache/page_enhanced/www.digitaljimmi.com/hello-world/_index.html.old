@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if IE 9]>         <html class="no-js ie9"> <![endif]-->
+<!--[if IE]>         <html class="no-js ie"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
+<head>
+   
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+   
+    <meta charset="UTF-8">
+   
+    <title>Jimmi Nielsen - Frontend Developer</title>
+
+    <!-- meta -->
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.17.0/plugins/CSSPlugin.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.17.0/easing/EasePack.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.17.0/TweenLite.min.js"></script>
+    <!-- icons -->
+
+    <!-- css + javascript -->
+    
+<!-- This site is optimized with the Yoast WordPress SEO plugin v2.2.1 - https://yoast.com/wordpress/plugins/seo/ -->
+<link rel="canonical" href="http://www.digitaljimmi.com/hello-world/" />
+<meta property="og:locale" content="en_GB" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Hello world! - DigitalJimmi" />
+<meta property="og:description" content="Welcome to WordPress. This is your first post. Edit or delete it, then start blogging!" />
+<meta property="og:url" content="http://www.digitaljimmi.com/hello-world/" />
+<meta property="og:site_name" content="DigitalJimmi" />
+<meta property="article:section" content="Uncategorised" />
+<meta property="article:published_time" content="2015-06-13T12:07:50+00:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:description" content="Welcome to WordPress. This is your first post. Edit or delete it, then start blogging!"/>
+<meta name="twitter:title" content="Hello world! - DigitalJimmi"/>
+<meta name="twitter:domain" content="DigitalJimmi"/>
+<!-- / Yoast WordPress SEO plugin. -->
+
+<link rel="alternate" type="application/rss+xml" title="DigitalJimmi &raquo; Hello world! Comments Feed" href="http://www.digitaljimmi.com/hello-world/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.digitaljimmi.com\/wordpress\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.2.2"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56812,55356,56807),0,0),c.toDataURL().length>3e3):(d.fillText(String.fromCharCode(55357,56835),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='style-css'  href='http://www.digitaljimmi.com/content/themes/digitaljimmi/style.css?ver=4.2.2' type='text/css' media='all' />
+<link rel='stylesheet' id='woocommerce-layout-css'  href='//www.digitaljimmi.com/content/plugins/woocommerce/assets/css/woocommerce-layout.css?ver=2.3.11' type='text/css' media='all' />
+<link rel='stylesheet' id='woocommerce-smallscreen-css'  href='//www.digitaljimmi.com/content/plugins/woocommerce/assets/css/woocommerce-smallscreen.css?ver=2.3.11' type='text/css' media='only screen and (max-width: 768px)' />
+<link rel='stylesheet' id='woocommerce-general-css'  href='//www.digitaljimmi.com/content/plugins/woocommerce/assets/css/woocommerce.css?ver=2.3.11' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-pagenavi-css'  href='http://www.digitaljimmi.com/content/plugins/wp-pagenavi/pagenavi-css.css?ver=2.70' type='text/css' media='all' />
+<script type='text/javascript' src='http://www.digitaljimmi.com/content/themes/digitaljimmi/js/modernizr-custom.min.js?ver=0.1'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.digitaljimmi.com/wordpress/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.digitaljimmi.com/wordpress/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.2.2" />
+<meta name="generator" content="WooCommerce 2.3.11" />
+<link rel='shortlink' href='http://www.digitaljimmi.com/?p=1' />
+
+        <script type='text/javascript'>
+
+            if(window.location.hostname === 'giveaday.bestseller.com'){
+                window.location.href='http://bestsellergiveaday.com';
+            }
+
+            var isFacebook  = top!==self;   
+            var baseUrl     = 'http://www.digitaljimmi.com';
+            var themeUrl     = 'http://www.digitaljimmi.com/content/themes/digitaljimmi';
+            var domain      = 'www.digitaljimmi.com';
+            var ajaxUrl     = 'http://www.digitaljimmi.com/wordpress/wp-admin/admin-ajax.php';
+        </script>
+        <script type="text/javascript">
+        var templateUrl = 'http://www.digitaljimmi.com/content/themes/digitaljimmi';
+    </script>
+</head>
+<body class="woocommerce">
+
+
+	<div id="main-content" role="main">
+			
+	<article  id="post-1" class="post-1 post type-post status-publish format-standard hentry category-uncategorised">
+		<header>
+			<h2>
+				<a href="http://www.digitaljimmi.com/hello-world/" title="Hello world!">Hello world!</a>
+			</h2>
+		</header>
+
+		<p>Welcome to WordPress. This is your first post. Edit or delete it, then start blogging!</p>
+		
+		<footer>
+			<p class="text-muted">
+				<small>
+					<span class="date ">June 13, 2015 12:07 pm</span>
+					<span class="author fa fa-keyboard-o"> by <a href="http://www.digitaljimmi.com/author/jimmirbn/" title="Posts by jimmirbn" rel="author">jimmirbn</a></span>
+									</small>
+			</p>
+		</footer>
+	</article>
+	<!-- /article -->
+	
+
+	</div><!-- /main-content -->
+	<!-- sidebar -->
+<aside id="sidebar" role="complementary">
+
+	<!-- search -->
+<form method="get" action="http://www.digitaljimmi.com" role="search">
+	<div>
+		<input type="search" name="s" placeholder="Search">
+	</div>
+	<button type="submit" role="button">Search</button>
+</form>
+<!-- /search -->    		
+	<div class="sidebar-widget">
+			</div>
+	
+	<div class="sidebar-widget">
+			</div>
+		
+</aside>
+<!-- /sidebar -->
+<div class="modal fade" id="ieModal">
+                  <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                              <div class="modal-header text-center">
+                                    <h4 class="modal-title">Websitet er ikke optimeret til IE</h4>
+                                    <h6>Vælg en ad nederstående</h6>
+                              </div>
+                              <div class="modal-body">
+                                    <div class="row">
+                                          <div class="col-md-4">
+                                                <a href="http://www.google.dk/intl/da/chrome/" class="thumbnail" target="_blank">
+                                                      <img src="http://www.digitaljimmi.com/content/themes/digitaljimmi/assets/img/chrome.png" alt="chrome logo">
+                                                </a>
+                                          </div>
+                                          <div class="col-md-4">
+                                                <a href="https://www.mozilla.org/da/firefox/new/" class="thumbnail" target="_blank">
+                                                      <img src="http://www.digitaljimmi.com/content/themes/digitaljimmi/assets/img/firefox.png" alt="...">
+                                                </a>
+                                          </div>
+                                          <div class="col-md-4">
+                                                <a href="http://www.apple.com/safari/" class="thumbnail" target="_blank">
+                                                      <img src="http://www.digitaljimmi.com/content/themes/digitaljimmi/assets/img/safari.png" alt="...">
+                                                </a>
+                                          </div>
+                                    </div>
+                              </div>
+                        </div><!-- /.modal-content -->
+                  </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+<script type='text/javascript' src='http://www.digitaljimmi.com/content/themes/digitaljimmi/js/vendors.min.js?ver=0.1'></script>
+<script type='text/javascript' src='http://www.digitaljimmi.com/content/themes/digitaljimmi/js/site.min.js?ver=1.2'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var wc_add_to_cart_params = {"ajax_url":"\/wordpress\/wp-admin\/admin-ajax.php","i18n_view_cart":"View Basket","cart_url":"http:\/\/www.digitaljimmi.com\/basket\/","is_cart":"","cart_redirect_after_add":"yes"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='//www.digitaljimmi.com/content/plugins/woocommerce/assets/js/frontend/add-to-cart.min.js?ver=2.3.11'></script>
+<script type='text/javascript' src='//www.digitaljimmi.com/content/plugins/woocommerce/assets/js/jquery-blockui/jquery.blockUI.min.js?ver=2.60'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var woocommerce_params = {"ajax_url":"\/wordpress\/wp-admin\/admin-ajax.php"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='//www.digitaljimmi.com/content/plugins/woocommerce/assets/js/frontend/woocommerce.min.js?ver=2.3.11'></script>
+<script type='text/javascript' src='//www.digitaljimmi.com/content/plugins/woocommerce/assets/js/jquery-cookie/jquery.cookie.min.js?ver=1.4.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var wc_cart_fragments_params = {"ajax_url":"\/wordpress\/wp-admin\/admin-ajax.php","fragment_name":"wc_fragments"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='//www.digitaljimmi.com/content/plugins/woocommerce/assets/js/frontend/cart-fragments.min.js?ver=2.3.11'></script>
+</body>
+</html>
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+ Served from: www.digitaljimmi.com @ 2015-08-23 07:38:36 by W3 Total Cache -->

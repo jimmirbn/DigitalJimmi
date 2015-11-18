@@ -1,0 +1,33 @@
+/// 'Extra Small' : default
+/// 'Small' : Tablet in portrait
+/// 'Medium' : Tablet in Landscape and many laptops
+/// 'Large' : Desktops and other large screens
+// $breakpoints: (
+// 	'small':  (min-width: 768px),
+// 	'medium': (min-width: 992px),
+// 	'large': (min-width: 1200px),
+// 	'landscape' : (orientation: landscape),
+// 	'height-small': (min-height: 400px),
+// 	'height-medium': (min-height: 550px),
+// 	'height-large': (min-height: 620px),
+// 	'height-large-2': (min-height: 700px),
+// 	'height-giga': (min-height: 850px),
+// 	'height-giga-2': (min-height: 950px),
+
+// 	) !global;
+
+// //Fonts import
+// @import url("https://hello.myfonts.net/count/2d3d1a");
+
+
+// @include font-face("Adelle-bold", "assets/fonts/2D3D3E_0_0", normal);
+// @include font-face("Adelle-light", "assets/fonts/2D3D3E_1_0", normal);
+// @include font-face("Adelle-regular", "assets/fonts/2D3D3E_2_0", normal);
+
+// //Fonts
+// $adelle--regular : "Adelle-regular";
+// $adelle--light : "Adelle-light";
+// $adelle--bold : "Adelle-bold";
+
+// $Helvetica--neue : Helvetica Neue;
+// $Helvetica : Helvetica;

@@ -1,0 +1,12 @@
+@mixin vertical-alignment {
+    margin-bottom: $default-line-height;
+    margin-bottom: $default-magic-ratio + rem;
+}
+
+@mixin old-ie() {
+    @at-root {
+        .lt-ie9  & { 
+            @content
+        }
+    }
+}

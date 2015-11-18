@@ -1,0 +1,48 @@
+@mixin fixed-ratio($width, $height) {
+    position : relative;
+    &:before {
+        content : "";
+        display: block;
+        padding-top: $height/$width*100%;
+    }
+}
+
+@mixin font-size($font-size, $line-height: true) {
+    @include vertical-alignment();
+    font-size: $font-size;
+    font-size: calculateRem($font-size);
+    @if type-of($line-height) == "number" {
+        line-height: $line-height;
+    }
+    @else {
+        line-height: ceil($font-size / $default-line-height) * ($default-line-height / $font-size);
+    }
+}
+
+@mixin antialiasing($type:antialiased) {
+    -webkit-font-smoothing: $type;
+    font-smoothing: $type;
+    font-smooth: always;
+
+    * {
+        -webkit-font-smoothing: inherit;
+        font-smoothing: inherit;
+        font-smooth: inherit;
+    }
+}
+
+/// Responsive manager.
+/// @access public
+/// @param {String} $breakpoint - Breakpoint
+/// @requires $breakpoints
+@mixin respond-to($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media #{inspect(map-get($breakpoints, $breakpoint))} {
+      @content;
+    }
+  }
+
+  @else {
+    // @error 'No value found for `#{$breakpoint}`. Please make sure it is defined in `$breakpoints` map.';
+  }
+}
