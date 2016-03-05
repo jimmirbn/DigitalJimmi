@@ -1,4 +1,4 @@
-module.exports = function (grunt) {
+module.exports = function(grunt) {
     "use strict";
     require('time-grunt')(grunt);
     require('load-grunt-tasks')(grunt);
@@ -8,47 +8,50 @@ module.exports = function (grunt) {
         /**
          * Directory variables
          */
-        app : {
-            root : 'app/content/themes/<%= pkg.name %>',
-            js : '<%= app.root %>/js',
-            css : '<%= app.root %>',
-            assets : '<%= app.root %>/assets'
+        app: {
+            root: 'app/content/themes/<%= pkg.name %>',
+
+            js: '<%= app.root %>/js',
+            css: '<%= app.root %>',
+            assets: '<%= app.root %>/assets'
         },
-        src : {
-            bower : 'bower_components',
-            root : 'src',
-            js : '<%= src.root %>/js',
-            sass : '<%= src.root %>/sass',
-            temp : '<%= src.root %>/temp',
-            html : '<%= src.root %>/templating',
-            
-            assets : '<%= src.root %>/assets'
+        src: {
+            bower: 'bower_components',
+            vendors: 'bower_components',
+            root: 'src',
+            js: '<%= src.root %>/js',
+            sass: '<%= src.root %>/sass',
+            temp: '<%= src.root %>/temp',
+            html: '<%= src.root %>/templating',
+
+            assets: '<%= src.root %>/assets'
         },
-    
+
+
         /**
          * Annotate angular files before concatanation
          */
-        ngAnnotate : {
-            options : {
-                singleQuotes : true
+        ngAnnotate: {
+            options: {
+                singleQuotes: true
             },
-            app : {
-                files : {
+            app: {
+                files: {
 
-                    '<%= src.temp %>/app.annotated.js' : ['<%= src.js %>/angular/**/*.js'] // where 'app' is the name of the app
+                    '<%= src.temp %>/app.annotated.js': ['<%= src.js %>/angular/**/*.js'] // where 'app' is the name of the app
                 }
             }
         },
-    
+
         /**
          * concat setup remember to include ngAnnotated files
          */
         concat: {
-            options : {
-                sourceMap : true,
+            options: {
+                sourceMap: true,
             },
-            vendors : {
-                src : [
+            vendors: {
+                src: [
                     '<%= src.bower %>/lodash/lodash.min.js',
                     '<%= src.bower %>/jquery/dist/jquery.js',
                     '<%= src.bower %>/matchMedia/matchMedia.js',
@@ -56,20 +59,26 @@ module.exports = function (grunt) {
                     '<%= src.bower %>/angular/angular.js',
                     '<%= src.bower %>/angular-sanitize/angular-sanitize.js',
                     '<%= src.bower %>/angular-animate/angular-animate.min.js',
+                    '<%= src.bower %>/slick-carousel/slick/slick.min.js',
+                    '<%= src.js %>/vendors/exif.js',
+                    '<%= src.bower %>/object-fit/dist/polyfill.object-fit.js',
+                    '<%= src.bower %>/binaryajax/binaryajax.js',
+
+                    
                 ],
-                dest : '<%= app.js %>/vendors.js',
-                nonull : true
+                dest: '<%= app.js %>/vendors.js',
+                nonull: true
             },
             app: {
                 src: [
-                    // '<%= src.js %>/angular-open.js',
-                    // '<%= src.temp %>/app.annotated.js',
-                    // '<%= src.js %>/angular-close.js'
-                    '<%= src.js %>/site.js'
-                    
+                    '<%= src.js %>/angular-open.js',
+                    '<%= src.temp %>/app.annotated.js',
+                    '<%= src.js %>/site.js',
+                    '<%= src.js %>/angular-close.js'
+
                 ],
                 dest: '<%= app.js %>/site.js',
-                nonull : true
+                nonull: true
             },
         },
 
@@ -129,27 +138,27 @@ module.exports = function (grunt) {
          */
         modernizr: {
             dist: {
-                "devFile" : "<%= src.bower %>/modernizr/modernizr.js",
-                "outputFile" : "<%= app.js %>/modernizr-custom.js",
-                "extra" : {
-                    "shiv" : true,
-                    "load" : true,
-                    "mq" : true,
-                    "cssclasses" : true
+                "devFile": "<%= src.bower %>/modernizr/modernizr.js",
+                "outputFile": "<%= app.js %>/modernizr-custom.js",
+                "extra": {
+                    "shiv": true,
+                    "load": true,
+                    "mq": true,
+                    "cssclasses": true
                 },
-                "extensibility" : {
-                    "addtest" : true,
-                    "prefixed" : false,
-                    "teststyles" : false,
-                    "testprops" : false,
-                    "testallprops" : false,
-                    "hasevents" : false,
-                    "prefixes" : false,
-                    "domprefixes" : false
+                "extensibility": {
+                    "addtest": true,
+                    "prefixed": false,
+                    "teststyles": false,
+                    "testprops": false,
+                    "testallprops": false,
+                    "hasevents": false,
+                    "prefixes": false,
+                    "domprefixes": false
                 },
-                "uglify" : false,
-                "parseFiles" : true,
-                "files" : {
+                "uglify": false,
+                "parseFiles": true,
+                "files": {
                     "src": ['<%= app.css %>/style.css', '<%= app.js %>/site.js', '<%= app.js %>/vendors.js']
                 }
             }
@@ -167,10 +176,10 @@ module.exports = function (grunt) {
             },
 
             themeTemplates: {
-                expand : true,
-                cwd : '<%= src.html %>',
-                src : ['**', '**/*'],
-                dest : '<%= app.root %>'
+                expand: true,
+                cwd: '<%= src.html %>',
+                src: ['**', '**/*'],
+                dest: '<%= app.root %>'
             }
         },
 
@@ -178,7 +187,7 @@ module.exports = function (grunt) {
          * Remove temp files
          */
         clean: {
-            temp : ['<%= src.temp %>']
+            temp: ['<%= src.temp %>']
         },
 
         /**
@@ -208,17 +217,15 @@ module.exports = function (grunt) {
          */
         svgmin: {
             options: {
-                plugins: [
-                    {
-                        removeViewBox: false
-                    }, {
-                        removeUselessStrokeAndFill: false
-                    }, {
-                        convertPathData: {
-                            straightCurves: false
-                        }
+                plugins: [{
+                    removeViewBox: false
+                }, {
+                    removeUselessStrokeAndFill: false
+                }, {
+                    convertPathData: {
+                        straightCurves: false
                     }
-                ]
+                }]
             },
             dist: {
                 files: [{
@@ -239,10 +246,7 @@ module.exports = function (grunt) {
                 options : {
                     livereload : 35729
                 },
-                files: [
-                    '<%= src.js %>/*.js',
-                    '<%= src.js %>/**/*.js'
-                ],
+                files: ['<%= src.js %>/**/*.js'],
                 tasks: ['js_build']
             },
             sassfiles: {
@@ -260,6 +264,9 @@ module.exports = function (grunt) {
                 tasks: ['assets_build']
             },
             templatefiles: {
+                options : {
+                    livereload : 35729
+                },
                 files: ['<%= src.html %>/**'],
                 tasks: ['template_build']
             }
@@ -275,9 +282,9 @@ module.exports = function (grunt) {
             }
         },
         notify: {
-            all : {
-                options : {
-                    message : 'APP build'
+            all: {
+                options: {
+                    message: 'APP build'
                 }
             },
             css: {
@@ -302,18 +309,18 @@ module.exports = function (grunt) {
             }
         },
         concurrent: {
-            concurrentOne : {
-                tasks : ['copy', 'concat', 'sass'],
+            concurrentOne: {
+                tasks: ['copy', 'concat', 'sass'],
                 options: {
                     logConcurrentOutput: true,
-                    limit : 4
+                    limit: 4
                 }
             },
-            concurrentTwo : {
-                tasks : ['cssmin', 'uglify', 'imagemin:assets', 'svgmin'],
+            concurrentTwo: {
+                tasks: ['cssmin', 'uglify', 'svgmin'],
                 options: {
                     logConcurrentOutput: true,
-                    limit : 4
+                    limit: 4
                 }
             }
         }
@@ -322,14 +329,14 @@ module.exports = function (grunt) {
      * Task to install bower components listed in bower.json
      * @return {void}
      */
-    grunt.registerTask('bower_install', 'install bower dependencies', function () {
+    grunt.registerTask('bower_install', 'install bower dependencies', function() {
 
         var exec = require('child_process').exec;
         var done = this.async();
 
-        exec('bower install', {cwd: './'}, function(error, stdout, stderr) {
+        exec('bower install', { cwd: './' }, function(error, stdout, stderr) {
             grunt.log.writeln(stdout);
-            if(error){
+            if (error) {
                 grunt.log.writeln('err');
                 grunt.log.writeln(stderr);
             }
@@ -350,7 +357,7 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('js_build', [
-        'ngAnnotate', 
+        'ngAnnotate',
         'concat:app',
         'modernizr',
         'uglify:site',
@@ -370,7 +377,7 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('once', [
-        'ngAnnotate', 
+        'ngAnnotate',
         'concurrent:concurrentOne',
         'concurrent:concurrentTwo',
         'modernizr',

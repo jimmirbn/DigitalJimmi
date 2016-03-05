@@ -1,4 +1,3 @@
-
 4.0.0 - 2014-03-25 - Chris Wiegman
 	Initial Release
 4.0.1 - 2014-03-25 - Packaging Bot (modules/free)
@@ -362,3 +361,125 @@
 4.6.5 - 2015-02-05 - Packaging Bot (core)
 	Fix: Quick banning IPs will now work correctly if existing htaccess rules are in place
 	Fix: minor bug fixes and typo corrections.
+4.6.7 - 2015-02-20 - Packaging Bot (modules/free)
+	Updated modules/free to version 1.6.1
+4.6.8 - 2015-02-20 - Packaging Bot (core)
+	Enhancement: Limit the number of lockouts that can be displayed at any given time in the dashboard.
+	Fix: Make sure header error messages are suppressed when performing a lockout.
+	Fix: Fix error message from missing login information when displaying lockouts.
+4.6.9 - 2015-02-26 - Packaging Bot (modules/free)
+	Bug Fix: When a file scan is run from iThemes Sync, a warning will no longer be added to the site's error log.
+4.6.10 - 2015-02-26 - Packaging Bot (core)
+	Bug Fix: Fixed regression that prevented adding wildcard IP's in the form of 'XXX.XXX.XXX.*' to Ban Hosts.
+4.6.11 - 2015-03-20 - Packaging Bot (core)
+	Enhancement: Translation files can now be stored in WP_LANG_DIR/plugins/ithemes-security-pro for
+		iThemes Security Pro and WP_LANG_DIR/plugins/better-wp-security for iThemes Security free version.
+	Bug Fix: The file permissions check will no longer list a warning if the plugins directory has permissions of 755.
+4.6.12 - 2015-03-20 - Packaging Bot (modules/free)
+	Bug Fix: Fixed incorrect text describing the "Backups to Retain" database backup setting.
+4.6.13 - 2015-04-13 - Packaging Bot (modules/free)
+	Bug Fix: Security fix for XSS vulnerability. Thanks to Ole Aass (@oleaass) for finding and disclosing this vulnerability to the iThemes Security team.
+4.7.0 - 2015-06-17 - Chris Jean
+	Enhancement: Updated to use new file modification API.
+	Enhancement: Added HackRepair.com blacklist for Nginx.
+	Enhancement: Improved Nginx support for System Tweak features.
+	Enhancement: Updates to wp-config.php, .htaccess, and nginx.conf files now support more systems.
+	Enhancement: Combined the "Force SSL for Dashboard" and "Force SSL for Login" settings to a unified "Force SSL for Dashboard" setting. This is due to how the FORCE_SSL_LOGIN define was deprecated in WP 4.0.0.
+	Enhancement: Added comments to wp-config.php, .htaccess, and nginx.conf updates that indicate which settings affect the specific entries.
+	Enhancement: Added translation support for previously static strings, including strings used for comments in wp-config.php, .htaccess, and nginx.conf files.
+	Enhancement: Improved generation of valid referers for use by the Reduce Comment Spam feature.
+	Enhancement: Broadened the server support in the import settings code.
+	Enhancement: Added new library classes for managing files, directories, and config files.
+	Enhancement: Improved error messages for when file writes fail.
+	Enhancement: Improved error messages for when export file creation fails.
+	Enhancement: Improved error messages for situations when the .htaccess, nginx.conf, or wp-config.php files may need to be manually updated.
+	Bug Fix: Added support for Apache 2.4 without the access_compat module.
+	Bug Fix: Fixed condition where forcing SSL on front-end pages could cause infinite redirection loops with specific setups of nginx to Apache reverse proxy servers.
+	Bug Fix: Fixed scenarios where the site would be forced to load via https but scripts, stylesheets, and images would load via http.
+	Bug Fix: Fixed invalid nginx.conf rule generation for the Reduce Comment Spam feature.
+	Bug Fix: Corrected invalid parsing of some IP formats in Ban Hosts list.
+	Bug Fix: Improved error handling when reading or updating config files.
+	Bug Fix: Fixed various warnings that would display when changing settings.
+	Bug Fix: Fixed a situation where creation of a zipped export file would fail, but an email would still be sent as if the zip was created successfully.
+4.8.0 - 2015-07-06 - Chris Jean
+	Feature Removal: Removed the malware scanning features as VirusTotal no longer supports scanning from WordPress sites. A replacement is in the works.
+	Bug Fix: The close button on the "Thank you for activating iThemes Security" message now appears in the correct location.
+	Bug Fix: Removed the site's URL being displayed in the "Replace jQuery With a Safe Version" setting details.
+	Bug Fix: Updated .htaccess rules to be compatible with Apache 2.4 without the auth compat module.
+	Bug Fix: Enabling and disabling the "Remove File Writing Permissions" setting now updates the file permissions properly.
+	Bug Fix: Web servers that cannot be recognized now default to Apache.
+	Enhancement: Updated the hackrepair lists.
+4.9.0 - 2015-08-03 - Chris Jean
+	Feature Removal: Removed the "Remove WordPress Generator Meta Tag" feature as it is not recommended due to limited security benefit and creating compatibility issues.
+	Enhancement: Added the ability to undo the Content Directory change.
+	Bug Fix: No longer tries to load a non-existent JavaScript file for the salts module.
+	Bug Fix: Fixed an issue with one-time database backups on multi-site installs.
+	Bug Fix: Fixed issues related to locating .htaccess or nginx.conf files on sites with WordPress installed in a separate directory.
+	Bug Fix: Fixed issues with PHP blocking in uploads directory not working with certain non-standard setups.
+	Bug Fix: Minor change to fix a warning that can appear after changing the Content Directory.
+	Bug Fix: Fixed a PHP fatal error that could occur on some servers when adding a ban to the site's .htaccess or nginx.conf file.
+5.0.0 - 2015-09-14 - Chris Jean
+	Compatibility Fix: Changed translation domain from it-l10n-better-wp-security to better-wp-security. This change was necessary in order to be included in the translate.wordpress.org project.
+	New Feature: Added malware scanning provided by Sucuri SiteCheck.
+5.0.1 - 2015-09-15 - Chris Jean
+	Compatibility Fix: Added support for ITSEC_TEST_MALWARE_SCAN_DISABLE_SSLVERIFY. Setting it to true can bypass "SSL peer certificate or SSH remote key was not OK" errors on servers with bad SSL configurations.
+5.1.0 - 2015-10-15 - Chris Jean
+	New Feature: Added "Multiple Authentication Attempts per XML-RPC Request" setting to the WordPress Tweaks section. When this setting is set to "Block", iThemes Security will block brute force login attacks against XML-RPC as described by Sucuri in this blog post: https://blog.sucuri.net/2015/10/brute-force-amplification-attacks-against-wordpress-xmlrpc.html
+	Enhancement: Updated text describing the XML-RPC setting in the WordPress Tweaks section to better explain what the setting is for and which setting is recommended.
+	Enhancement: Improved IP detection when proxy detection is active by processing the header set by CloudFlare.
+	Enhancement: Added a filter named itsec_filter_remote_addr_headers which can be used to change which headers are searched for the client IP. This allows for tailoring the IP detection for specific reverse proxies and load balancers.
+	Bug Fix: Updated the Banned Users settings to no longer add a newline to the Ban Hosts input each time the settings page is saved.
+	Compatibility Fix: Updated code triggered by the ITSEC_TEST_MALWARE_SCAN_DISABLE_SSLVERIFY define. This avoids plugin compatibility issues that prevent disabling the SSL peer verification.
+5.1.1 - 2015-11-10 - Chris Jean
+	Enhancement: Removed Yandex and Sogou from the HackRepair blacklist as they are legitimate search engine bots.
+	Enhancement: Added detailed information about Sucuri malware scan errors to Malware Scan log details.
+	Bug Fix: No longer enables display of database errors when an event is logged.
+5.2.0 - 2016-01-18 - Chris Jean & Aaron D. Campbell
+	Security Fix: Fixed PHP code that could allow AJAX requests to list directories and files outside the directory structure of the WordPress installation. Note that these AJAX requests required a logged in user with admin-level privileges. This vulnerability was unable to be exploited by non-privileged or anonymous requests.
+	Bug Fix: Updated the SSL feature to use 301 redirects rather than 302 redirects.
+	Bug Fix: Fixed situations where security nonces would incorrectly trigger "security check" errors when enabling specific combinations of features on the settings page.
+	Bug Fix: Enabling scheduled database backups and setting a backup interval of 0 days no longer results in a backup being created on every page load.
+	Bug Fix: Module-specific data is properly initialized/removed on plugin activation, deactivation, and uninstallation.
+	Feature Removal: Removed the "Security Status" portion of the Security > Dashboard page. This is in preparation for a new tool that provides suggestions tailored to the site and server that Security is running on.
+	Enhancement: Updated the way the feature modules function in order to allow them to be redesigned in a more efficient and flexible way for future releases.
+	Enhancement: Updated the File Change Detection feature to attempt a max memory limit of 256M rather than 128M as some users experience out of memory issues which could be fixed with the higher memory limit.
+	Enhancement: Updated the Database Backup feature to attempt a max memory limit of 256M rather than 128M as some users experience out of memory issues which could be fixed with the higher memory limit.
+	Enhancement: Added localization support for some non-localized strings.
+	Enhancement: Improved detection of multiple active versions of iThemes Security.
+5.2.1 - 2016-02-04 - Chris Jean & Aaron D. Campbell
+	Bug Fix: Comparisons of IPv4 addresses and ranges now include the IP's at the edge of the ranges.
+	Bug Fix: IPv4 tests now work as expected when deciding if a blacklisted IP or range overlaps a whitelisted IP's and ranges.
+	Bug Fix: Fixed styling issue that affected the display of the horizontal tabs on settings pages in WordPress 4.5.
+	Bug Fix: Replaced old module sorting order in settings screens.
+	Bug Fix: Fixed PHP 7 compatibility issue that triggers the following error: "Uncaught Error: Call to undefined function mysql_get_client_info()".
+	Bug Fix: Fixed warnings and errors that could occur when deleting the plugin.
+	Bug Fix: Fixed warning that could occur on a failed login when Local Brute Force Detection is disabled.
+	Bug Fix: All data added to the options table by iThemes Security is removed on uninstall.
+	Bug Fix: Fixed the cause of the following warning: call_user_func_array() expects parameter 1 to be a valid callback, class 'ITSEC_SSL_Setup' does not have a method 'execute_deactivate'
+	Enhancement: When a lockout is being executed, wp_logout() will only be called if the current page request comes from a logged in user. This prevents plugins that log logout events from logging log outs from unknown users.
+	Enhancement: Improved the descriptions used for some of the data displayed in the "System Information" section of Security > Dashboard.
+	Enhancement: Added "Use MySQLi" entry to the "System Information" section of Security > Dashboard to show whether the MySQLi driver is enabled.
+	Enhancement: Updated the "SQL Mode" entry in the "System Information" section of Security > Dashboard to show the full details if that value is set.
+	Enhancement: Improved code that ensures that tables and options table entries created by iThemes Security are removed on uninstall only when no other iThemes Security plugin is active.
+5.3.0 - 2016-02-17 - Chris Jean & Aaron D. Campbell
+	New Feature: Added support for IPv6 addresses. This includes support for IPv6 in lockouts, ban hosts, and white lists.
+	Bug Fix: Fixed issue that could cause username-based lockouts to fail for long usernames.
+	Bug Fix: Fixed issue that prevented wildcard IP ranges from being blacklisted or whitelisted.
+	Bug Fix: Removed warnings generated when the Away Mode module is disabled and iThemes Sync contacts the site.
+	Enhancement: Updated descriptions of valid IP and IP range formats for the Lockout White List and the Ban Hosts settings.
+	Enhancement: Updated host entries in log details to link to traceip.net rather than ip-adress.com. This is because ip-adress.com does not support IPv6 addresses.
+	Enhancement: Updated some translatable strings relating to blacklisting and whitelisting to allow for better translations.
+	Enhancement: Added details about how wildcard IP ranges are converted to CIDR format (this improves performance).
+5.3.1 - 2016-02-29 - Chris Jean & Aaron D. Campbell
+	Security Fix: Hardened the created backups and logs directories. Thanks to Nicolas Chatelain (SYSDREAM IT Security Services) for notifying us of this issue.
+	Security Fix: More secure backup and log file names. Thanks to Nicolas Chatelain (SYSDREAM IT Security Services) for notifying us of this issue.
+	Bug Fix: The "NGINX Conf File" setting is now properly respected, causing the generated NGINX configuration file to be stored in that location.
+	Enhancement: Generated database backup file names now contain a human-readable timestamp in the format of YYYYMMDD-HHMMSS.
+	Enhancement: Zipped database backup files no longer contain a deeply nested directory structure. Instead, they only contain the sql file.
+	Enhancement: When the "Force Unique Nickname" feature is enabled, the generated display name now uses an improved randomization function.
+	Enhancement: Improved tabbing of rules in generated nginx.conf files.
+	Enhancement: Removed the "See what's new button" as it has fulfilled its purpose.
+5.3.2 - 2016-03-01 - Chris Jean & Aaron D. Campbell
+	Bug Fix: Updated code that generates the backups and logs directories to ensure that it attempts to create the parent directory if it does not exist yet.
+	Bug Fix: Removed warnings that could be generated if the logs directory could not be created.
+	Bug Fix: Database backup files sent via email no longer have a name without an extension if zipping up the file fails.

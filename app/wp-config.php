@@ -25,7 +25,7 @@ define('DOMAIN',$_SERVER['HTTP_HOST']);
 
 // environment urls WITHOUT protocol
 $localurl = 'local.digitaljimmi.com';
-$productionurl = 'www.digitaljimmi.com';
+$productionurl = 'digitaljimmi.com';
 
 // FACEBOOK SETTINGS (comment back in if this is a FB app)
 // define('APP_ID','xxxxxxxxxxxxxxxx');
@@ -50,14 +50,6 @@ switch($_SERVER['HTTP_HOST']) {
         define('DB_HOST', 'mysql18.unoeuro.com');
         define('ENVIRONMENT', 'production');
         define('WP_DEBUG', false);
-        // define('WP_HOME', $url);
-        // define('WP_SITEURL', $url.'/wordpress');
-        // define('DB_NAME', 'digitaljimmi');
-        // define('DB_USER', 'root');
-        // define('DB_PASSWORD', 'root');
-        // define('DB_HOST', 'localhost');
-        // define('ENVIRONMENT', 'local');
-        // define('WP_DEBUG', true);
 
         define('WP_CONTENT_URL', $url.'/content');
         define( 'WP_CONTENT_DIR', $_SERVER['DOCUMENT_ROOT'] . '/content' );
@@ -79,18 +71,6 @@ switch($_SERVER['HTTP_HOST']) {
         define('WP_CONTENT_URL', $url.'/content');
         define( 'WP_CONTENT_DIR', $_SERVER['DOCUMENT_ROOT'] . '/content' );
     break;
-    // default :
-    // // for working on the Boilerplate ... PLEASE REMOVE THIS FOR PRODUCTION SITES
-    //     $url = PROTOCOL . $localurl;
-    //     define('WP_HOME', $url);
-    //     define('WP_SITEURL', $url.'/wordpress');
-    //     define('DB_NAME', 'plantplant_wordpress-boilerplate');
-    //     define('DB_USER', 'plantplant_wpboi');
-    //     define('DB_PASSWORD', '7sySaCQATZrLeyNm');
-    //     define('DB_HOST', 'db.plnt.dk');
-    //     define('ENVIRONMENT', 'boilerplate');
-    //     define('WP_DEBUG', true);
-    // break;
 }
 /* Default */
 
@@ -120,7 +100,7 @@ define('SECURE_AUTH_SALT', 'ga5Q~UiFzGF)L-i;-RF2f8wOIrq813Z>I7BL_nk|0D{/mH$&)IPH
 define('LOGGED_IN_SALT',   'kDL 6P:{K4(y<`Tk6^z#[jieLKE|Fy|q.cu1[E&Sj1($7])t@$-(1)N{u2>SU|s[');
 define('NONCE_SALT',       ',<*BBBDHn+<Ij0quJXuDwA@r}<O-bw[d)n+C;{^GFZ*p1y)eHk#T~hnP|tkKb!+&');
 
-
+define('WP_MEMORY_LIMIT', '256M');
 $table_prefix = 'wp_';
 
 if (!defined('ABSPATH'))

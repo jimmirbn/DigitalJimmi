@@ -1,6 +1,6 @@
 <?
 include_once('includes/theme.include.php');
-// include_once ('includes/ajax.include.php');
+include_once ('includes/ajax.include.php');
 // include_once('includes/facebook.include.php');
 // include_once('includes/custom-post-type.include.php');
 
@@ -73,3 +73,14 @@ if( function_exists('acf_add_options_page') ) {
 }
 add_action('init', 'theme_init');
 add_filter('show_admin_bar', '__return_false');
+
+add_action('fu_additional_html', 'my_fu_additional_html' );
+
+function my_fu_additional_html() {
+?>
+<div class="fileUpload btn btn-primary">
+    <span>Upload billede</span>
+    <input type="file" value="" name="files[]" id="ug_photo" class="required upload" onchange="this.form.submit()">
+</div>
+<?php
+}

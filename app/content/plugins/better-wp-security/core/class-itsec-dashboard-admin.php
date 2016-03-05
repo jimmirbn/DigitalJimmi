@@ -42,19 +42,9 @@ class ITSEC_Dashboard_Admin {
 	 */
 	public function itsec_add_admin_meta_boxes() {
 
-		//System status shows which plugin features have been activated
-		add_meta_box(
-			'itsec_status',
-			__( 'Security Status', 'it-l10n-better-wp-security' ),
-			array( $this, 'metabox_normal_status' ),
-			'toplevel_page_itsec',
-			'advanced',
-			'core'
-		);
-
 		add_meta_box(
 			'itsec_file_permissions',
-			__( 'WordPress File Permissions', 'it-l10n-better-wp-security' ),
+			__( 'WordPress File Permissions', 'better-wp-security' ),
 			array( $this, 'metabox_normal_file_permissions' ),
 			'toplevel_page_itsec',
 			'advanced',
@@ -63,7 +53,7 @@ class ITSEC_Dashboard_Admin {
 
 		add_meta_box(
 			'itsec_system_info',
-			__( 'System Information', 'it-l10n-better-wp-security' ),
+			__( 'System Information', 'better-wp-security' ),
 			array( $this, 'metabox_normal_system_info' ),
 			'toplevel_page_itsec',
 			'advanced',
@@ -85,22 +75,6 @@ class ITSEC_Dashboard_Admin {
 	public function metabox_normal_file_permissions() {
 
 		require_once( 'content/perms.php' );
-
-	}
-
-	/**
-	 * Display security status.
-	 *
-	 * Builds and displays the table showing the security status as determined
-	 * by which features have been configured.
-	 *
-	 * @since 4.0.0
-	 *
-	 * @return void
-	 */
-	public function metabox_normal_status() {
-
-		require_once( 'content/status.php' );
 
 	}
 

@@ -1,7 +1,6 @@
 <?php
 /**
- * @package    WPSEO
- * @subpackage Admin
+ * @package WPSEO\Admin\Bulk Editor
  * @since      1.5.0
  */
 
@@ -51,23 +50,26 @@ class WPSEO_Bulk_Description_List_Table extends WPSEO_Bulk_List_Table {
 	/**
 	 * Parse the metadescription
 	 *
-	 * @param string $column_name
-	 * @param object $record
-	 * @param string $attributes
+	 * @param string $column_name Column name.
+	 * @param object $record      Data object.
+	 * @param string $attributes  HTML attributes.
 	 *
 	 * @return string
 	 */
 	protected function parse_page_specific_column( $column_name, $record, $attributes ) {
 		switch ( $column_name ) {
-			case 'col_new_yoast_seo_metadesc' :
-				return sprintf( '<textarea id="%1$s" name="%1$s" class="wpseo-new-metadesc" data-id="%2$s"></textarea>', 'wpseo-new-metadesc-' . $record->ID, $record->ID );
+			case 'col_new_yoast_seo_metadesc':
+				return sprintf(
+					'<textarea id="%1$s" name="%1$s" class="wpseo-new-metadesc" data-id="%2$s"></textarea>',
+					'wpseo-new-metadesc-' . $record->ID,
+					$record->ID
+				);
 				break;
 
-
 			case 'col_existing_yoast_seo_metadesc':
+				// TODO inconsistent return/echo behavior R.
 				echo $this->parse_meta_data_field( $record->ID, $attributes );
 				break;
 		}
 	}
-
 } /* End of class */

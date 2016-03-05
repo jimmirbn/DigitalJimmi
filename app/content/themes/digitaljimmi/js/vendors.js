@@ -38464,3 +38464,1603 @@ if(g){var h=g;H(b,function(){h=T(a,b,c,d,f.to)});return function(a){(h||t)(a)}}y
 b,c)},beforeSetClass:function(a,b,c,d,f){f=f||{};b=q(c,"-remove")+" "+q(b,"-add");if(f=S("setClass",a,b,f.from))return H(a,d),f;y();d()},beforeAddClass:function(a,b,c,d){d=d||{};if(b=S("addClass",a,q(b,"-add"),d.from))return H(a,c),b;y();c()},beforeRemoveClass:function(a,b,c,d){d=d||{};if(b=S("removeClass",a,q(b,"-remove"),d.from))return H(a,c),b;y();c()},setClass:function(a,b,c,d,f){f=f||{};c=q(c,"-remove");b=q(b,"-add");return T("setClass",a,c+" "+b,d,f.to)},addClass:function(a,b,c,d){d=d||{};return T("addClass",
 a,q(b,"-add"),c,d.to)},removeClass:function(a,b,c,d){d=d||{};return T("removeClass",a,q(b,"-remove"),c,d.to)}}}])}])})(window,window.angular);
 //# sourceMappingURL=angular-animate.min.js.map
+
+/*
+     _ _      _       _
+ ___| (_) ___| | __  (_)___
+/ __| | |/ __| |/ /  | / __|
+\__ \ | | (__|   < _ | \__ \
+|___/_|_|\___|_|\_(_)/ |___/
+                   |__/
+
+ Version: 1.5.9
+  Author: Ken Wheeler
+ Website: http://kenwheeler.github.io
+    Docs: http://kenwheeler.github.io/slick
+    Repo: http://github.com/kenwheeler/slick
+  Issues: http://github.com/kenwheeler/slick/issues
+
+ */
+!function(a){"use strict";"function"==typeof define&&define.amd?define(["jquery"],a):"undefined"!=typeof exports?module.exports=a(require("jquery")):a(jQuery)}(function(a){"use strict";var b=window.Slick||{};b=function(){function c(c,d){var f,e=this;e.defaults={accessibility:!0,adaptiveHeight:!1,appendArrows:a(c),appendDots:a(c),arrows:!0,asNavFor:null,prevArrow:'<button type="button" data-role="none" class="slick-prev" aria-label="Previous" tabindex="0" role="button">Previous</button>',nextArrow:'<button type="button" data-role="none" class="slick-next" aria-label="Next" tabindex="0" role="button">Next</button>',autoplay:!1,autoplaySpeed:3e3,centerMode:!1,centerPadding:"50px",cssEase:"ease",customPaging:function(a,b){return'<button type="button" data-role="none" role="button" aria-required="false" tabindex="0">'+(b+1)+"</button>"},dots:!1,dotsClass:"slick-dots",draggable:!0,easing:"linear",edgeFriction:.35,fade:!1,focusOnSelect:!1,infinite:!0,initialSlide:0,lazyLoad:"ondemand",mobileFirst:!1,pauseOnHover:!0,pauseOnDotsHover:!1,respondTo:"window",responsive:null,rows:1,rtl:!1,slide:"",slidesPerRow:1,slidesToShow:1,slidesToScroll:1,speed:500,swipe:!0,swipeToSlide:!1,touchMove:!0,touchThreshold:5,useCSS:!0,useTransform:!1,variableWidth:!1,vertical:!1,verticalSwiping:!1,waitForAnimate:!0,zIndex:1e3},e.initials={animating:!1,dragging:!1,autoPlayTimer:null,currentDirection:0,currentLeft:null,currentSlide:0,direction:1,$dots:null,listWidth:null,listHeight:null,loadIndex:0,$nextArrow:null,$prevArrow:null,slideCount:null,slideWidth:null,$slideTrack:null,$slides:null,sliding:!1,slideOffset:0,swipeLeft:null,$list:null,touchObject:{},transformsEnabled:!1,unslicked:!1},a.extend(e,e.initials),e.activeBreakpoint=null,e.animType=null,e.animProp=null,e.breakpoints=[],e.breakpointSettings=[],e.cssTransitions=!1,e.hidden="hidden",e.paused=!1,e.positionProp=null,e.respondTo=null,e.rowCount=1,e.shouldClick=!0,e.$slider=a(c),e.$slidesCache=null,e.transformType=null,e.transitionType=null,e.visibilityChange="visibilitychange",e.windowWidth=0,e.windowTimer=null,f=a(c).data("slick")||{},e.options=a.extend({},e.defaults,f,d),e.currentSlide=e.options.initialSlide,e.originalSettings=e.options,"undefined"!=typeof document.mozHidden?(e.hidden="mozHidden",e.visibilityChange="mozvisibilitychange"):"undefined"!=typeof document.webkitHidden&&(e.hidden="webkitHidden",e.visibilityChange="webkitvisibilitychange"),e.autoPlay=a.proxy(e.autoPlay,e),e.autoPlayClear=a.proxy(e.autoPlayClear,e),e.changeSlide=a.proxy(e.changeSlide,e),e.clickHandler=a.proxy(e.clickHandler,e),e.selectHandler=a.proxy(e.selectHandler,e),e.setPosition=a.proxy(e.setPosition,e),e.swipeHandler=a.proxy(e.swipeHandler,e),e.dragHandler=a.proxy(e.dragHandler,e),e.keyHandler=a.proxy(e.keyHandler,e),e.autoPlayIterator=a.proxy(e.autoPlayIterator,e),e.instanceUid=b++,e.htmlExpr=/^(?:\s*(<[\w\W]+>)[^>]*)$/,e.registerBreakpoints(),e.init(!0),e.checkResponsive(!0)}var b=0;return c}(),b.prototype.addSlide=b.prototype.slickAdd=function(b,c,d){var e=this;if("boolean"==typeof c)d=c,c=null;else if(0>c||c>=e.slideCount)return!1;e.unload(),"number"==typeof c?0===c&&0===e.$slides.length?a(b).appendTo(e.$slideTrack):d?a(b).insertBefore(e.$slides.eq(c)):a(b).insertAfter(e.$slides.eq(c)):d===!0?a(b).prependTo(e.$slideTrack):a(b).appendTo(e.$slideTrack),e.$slides=e.$slideTrack.children(this.options.slide),e.$slideTrack.children(this.options.slide).detach(),e.$slideTrack.append(e.$slides),e.$slides.each(function(b,c){a(c).attr("data-slick-index",b)}),e.$slidesCache=e.$slides,e.reinit()},b.prototype.animateHeight=function(){var a=this;if(1===a.options.slidesToShow&&a.options.adaptiveHeight===!0&&a.options.vertical===!1){var b=a.$slides.eq(a.currentSlide).outerHeight(!0);a.$list.animate({height:b},a.options.speed)}},b.prototype.animateSlide=function(b,c){var d={},e=this;e.animateHeight(),e.options.rtl===!0&&e.options.vertical===!1&&(b=-b),e.transformsEnabled===!1?e.options.vertical===!1?e.$slideTrack.animate({left:b},e.options.speed,e.options.easing,c):e.$slideTrack.animate({top:b},e.options.speed,e.options.easing,c):e.cssTransitions===!1?(e.options.rtl===!0&&(e.currentLeft=-e.currentLeft),a({animStart:e.currentLeft}).animate({animStart:b},{duration:e.options.speed,easing:e.options.easing,step:function(a){a=Math.ceil(a),e.options.vertical===!1?(d[e.animType]="translate("+a+"px, 0px)",e.$slideTrack.css(d)):(d[e.animType]="translate(0px,"+a+"px)",e.$slideTrack.css(d))},complete:function(){c&&c.call()}})):(e.applyTransition(),b=Math.ceil(b),e.options.vertical===!1?d[e.animType]="translate3d("+b+"px, 0px, 0px)":d[e.animType]="translate3d(0px,"+b+"px, 0px)",e.$slideTrack.css(d),c&&setTimeout(function(){e.disableTransition(),c.call()},e.options.speed))},b.prototype.asNavFor=function(b){var c=this,d=c.options.asNavFor;d&&null!==d&&(d=a(d).not(c.$slider)),null!==d&&"object"==typeof d&&d.each(function(){var c=a(this).slick("getSlick");c.unslicked||c.slideHandler(b,!0)})},b.prototype.applyTransition=function(a){var b=this,c={};b.options.fade===!1?c[b.transitionType]=b.transformType+" "+b.options.speed+"ms "+b.options.cssEase:c[b.transitionType]="opacity "+b.options.speed+"ms "+b.options.cssEase,b.options.fade===!1?b.$slideTrack.css(c):b.$slides.eq(a).css(c)},b.prototype.autoPlay=function(){var a=this;a.autoPlayTimer&&clearInterval(a.autoPlayTimer),a.slideCount>a.options.slidesToShow&&a.paused!==!0&&(a.autoPlayTimer=setInterval(a.autoPlayIterator,a.options.autoplaySpeed))},b.prototype.autoPlayClear=function(){var a=this;a.autoPlayTimer&&clearInterval(a.autoPlayTimer)},b.prototype.autoPlayIterator=function(){var a=this;a.options.infinite===!1?1===a.direction?(a.currentSlide+1===a.slideCount-1&&(a.direction=0),a.slideHandler(a.currentSlide+a.options.slidesToScroll)):(a.currentSlide-1===0&&(a.direction=1),a.slideHandler(a.currentSlide-a.options.slidesToScroll)):a.slideHandler(a.currentSlide+a.options.slidesToScroll)},b.prototype.buildArrows=function(){var b=this;b.options.arrows===!0&&(b.$prevArrow=a(b.options.prevArrow).addClass("slick-arrow"),b.$nextArrow=a(b.options.nextArrow).addClass("slick-arrow"),b.slideCount>b.options.slidesToShow?(b.$prevArrow.removeClass("slick-hidden").removeAttr("aria-hidden tabindex"),b.$nextArrow.removeClass("slick-hidden").removeAttr("aria-hidden tabindex"),b.htmlExpr.test(b.options.prevArrow)&&b.$prevArrow.prependTo(b.options.appendArrows),b.htmlExpr.test(b.options.nextArrow)&&b.$nextArrow.appendTo(b.options.appendArrows),b.options.infinite!==!0&&b.$prevArrow.addClass("slick-disabled").attr("aria-disabled","true")):b.$prevArrow.add(b.$nextArrow).addClass("slick-hidden").attr({"aria-disabled":"true",tabindex:"-1"}))},b.prototype.buildDots=function(){var c,d,b=this;if(b.options.dots===!0&&b.slideCount>b.options.slidesToShow){for(d='<ul class="'+b.options.dotsClass+'">',c=0;c<=b.getDotCount();c+=1)d+="<li>"+b.options.customPaging.call(this,b,c)+"</li>";d+="</ul>",b.$dots=a(d).appendTo(b.options.appendDots),b.$dots.find("li").first().addClass("slick-active").attr("aria-hidden","false")}},b.prototype.buildOut=function(){var b=this;b.$slides=b.$slider.children(b.options.slide+":not(.slick-cloned)").addClass("slick-slide"),b.slideCount=b.$slides.length,b.$slides.each(function(b,c){a(c).attr("data-slick-index",b).data("originalStyling",a(c).attr("style")||"")}),b.$slider.addClass("slick-slider"),b.$slideTrack=0===b.slideCount?a('<div class="slick-track"/>').appendTo(b.$slider):b.$slides.wrapAll('<div class="slick-track"/>').parent(),b.$list=b.$slideTrack.wrap('<div aria-live="polite" class="slick-list"/>').parent(),b.$slideTrack.css("opacity",0),(b.options.centerMode===!0||b.options.swipeToSlide===!0)&&(b.options.slidesToScroll=1),a("img[data-lazy]",b.$slider).not("[src]").addClass("slick-loading"),b.setupInfinite(),b.buildArrows(),b.buildDots(),b.updateDots(),b.setSlideClasses("number"==typeof b.currentSlide?b.currentSlide:0),b.options.draggable===!0&&b.$list.addClass("draggable")},b.prototype.buildRows=function(){var b,c,d,e,f,g,h,a=this;if(e=document.createDocumentFragment(),g=a.$slider.children(),a.options.rows>1){for(h=a.options.slidesPerRow*a.options.rows,f=Math.ceil(g.length/h),b=0;f>b;b++){var i=document.createElement("div");for(c=0;c<a.options.rows;c++){var j=document.createElement("div");for(d=0;d<a.options.slidesPerRow;d++){var k=b*h+(c*a.options.slidesPerRow+d);g.get(k)&&j.appendChild(g.get(k))}i.appendChild(j)}e.appendChild(i)}a.$slider.html(e),a.$slider.children().children().children().css({width:100/a.options.slidesPerRow+"%",display:"inline-block"})}},b.prototype.checkResponsive=function(b,c){var e,f,g,d=this,h=!1,i=d.$slider.width(),j=window.innerWidth||a(window).width();if("window"===d.respondTo?g=j:"slider"===d.respondTo?g=i:"min"===d.respondTo&&(g=Math.min(j,i)),d.options.responsive&&d.options.responsive.length&&null!==d.options.responsive){f=null;for(e in d.breakpoints)d.breakpoints.hasOwnProperty(e)&&(d.originalSettings.mobileFirst===!1?g<d.breakpoints[e]&&(f=d.breakpoints[e]):g>d.breakpoints[e]&&(f=d.breakpoints[e]));null!==f?null!==d.activeBreakpoint?(f!==d.activeBreakpoint||c)&&(d.activeBreakpoint=f,"unslick"===d.breakpointSettings[f]?d.unslick(f):(d.options=a.extend({},d.originalSettings,d.breakpointSettings[f]),b===!0&&(d.currentSlide=d.options.initialSlide),d.refresh(b)),h=f):(d.activeBreakpoint=f,"unslick"===d.breakpointSettings[f]?d.unslick(f):(d.options=a.extend({},d.originalSettings,d.breakpointSettings[f]),b===!0&&(d.currentSlide=d.options.initialSlide),d.refresh(b)),h=f):null!==d.activeBreakpoint&&(d.activeBreakpoint=null,d.options=d.originalSettings,b===!0&&(d.currentSlide=d.options.initialSlide),d.refresh(b),h=f),b||h===!1||d.$slider.trigger("breakpoint",[d,h])}},b.prototype.changeSlide=function(b,c){var f,g,h,d=this,e=a(b.target);switch(e.is("a")&&b.preventDefault(),e.is("li")||(e=e.closest("li")),h=d.slideCount%d.options.slidesToScroll!==0,f=h?0:(d.slideCount-d.currentSlide)%d.options.slidesToScroll,b.data.message){case"previous":g=0===f?d.options.slidesToScroll:d.options.slidesToShow-f,d.slideCount>d.options.slidesToShow&&d.slideHandler(d.currentSlide-g,!1,c);break;case"next":g=0===f?d.options.slidesToScroll:f,d.slideCount>d.options.slidesToShow&&d.slideHandler(d.currentSlide+g,!1,c);break;case"index":var i=0===b.data.index?0:b.data.index||e.index()*d.options.slidesToScroll;d.slideHandler(d.checkNavigable(i),!1,c),e.children().trigger("focus");break;default:return}},b.prototype.checkNavigable=function(a){var c,d,b=this;if(c=b.getNavigableIndexes(),d=0,a>c[c.length-1])a=c[c.length-1];else for(var e in c){if(a<c[e]){a=d;break}d=c[e]}return a},b.prototype.cleanUpEvents=function(){var b=this;b.options.dots&&null!==b.$dots&&(a("li",b.$dots).off("click.slick",b.changeSlide),b.options.pauseOnDotsHover===!0&&b.options.autoplay===!0&&a("li",b.$dots).off("mouseenter.slick",a.proxy(b.setPaused,b,!0)).off("mouseleave.slick",a.proxy(b.setPaused,b,!1))),b.options.arrows===!0&&b.slideCount>b.options.slidesToShow&&(b.$prevArrow&&b.$prevArrow.off("click.slick",b.changeSlide),b.$nextArrow&&b.$nextArrow.off("click.slick",b.changeSlide)),b.$list.off("touchstart.slick mousedown.slick",b.swipeHandler),b.$list.off("touchmove.slick mousemove.slick",b.swipeHandler),b.$list.off("touchend.slick mouseup.slick",b.swipeHandler),b.$list.off("touchcancel.slick mouseleave.slick",b.swipeHandler),b.$list.off("click.slick",b.clickHandler),a(document).off(b.visibilityChange,b.visibility),b.$list.off("mouseenter.slick",a.proxy(b.setPaused,b,!0)),b.$list.off("mouseleave.slick",a.proxy(b.setPaused,b,!1)),b.options.accessibility===!0&&b.$list.off("keydown.slick",b.keyHandler),b.options.focusOnSelect===!0&&a(b.$slideTrack).children().off("click.slick",b.selectHandler),a(window).off("orientationchange.slick.slick-"+b.instanceUid,b.orientationChange),a(window).off("resize.slick.slick-"+b.instanceUid,b.resize),a("[draggable!=true]",b.$slideTrack).off("dragstart",b.preventDefault),a(window).off("load.slick.slick-"+b.instanceUid,b.setPosition),a(document).off("ready.slick.slick-"+b.instanceUid,b.setPosition)},b.prototype.cleanUpRows=function(){var b,a=this;a.options.rows>1&&(b=a.$slides.children().children(),b.removeAttr("style"),a.$slider.html(b))},b.prototype.clickHandler=function(a){var b=this;b.shouldClick===!1&&(a.stopImmediatePropagation(),a.stopPropagation(),a.preventDefault())},b.prototype.destroy=function(b){var c=this;c.autoPlayClear(),c.touchObject={},c.cleanUpEvents(),a(".slick-cloned",c.$slider).detach(),c.$dots&&c.$dots.remove(),c.$prevArrow&&c.$prevArrow.length&&(c.$prevArrow.removeClass("slick-disabled slick-arrow slick-hidden").removeAttr("aria-hidden aria-disabled tabindex").css("display",""),c.htmlExpr.test(c.options.prevArrow)&&c.$prevArrow.remove()),c.$nextArrow&&c.$nextArrow.length&&(c.$nextArrow.removeClass("slick-disabled slick-arrow slick-hidden").removeAttr("aria-hidden aria-disabled tabindex").css("display",""),c.htmlExpr.test(c.options.nextArrow)&&c.$nextArrow.remove()),c.$slides&&(c.$slides.removeClass("slick-slide slick-active slick-center slick-visible slick-current").removeAttr("aria-hidden").removeAttr("data-slick-index").each(function(){a(this).attr("style",a(this).data("originalStyling"))}),c.$slideTrack.children(this.options.slide).detach(),c.$slideTrack.detach(),c.$list.detach(),c.$slider.append(c.$slides)),c.cleanUpRows(),c.$slider.removeClass("slick-slider"),c.$slider.removeClass("slick-initialized"),c.unslicked=!0,b||c.$slider.trigger("destroy",[c])},b.prototype.disableTransition=function(a){var b=this,c={};c[b.transitionType]="",b.options.fade===!1?b.$slideTrack.css(c):b.$slides.eq(a).css(c)},b.prototype.fadeSlide=function(a,b){var c=this;c.cssTransitions===!1?(c.$slides.eq(a).css({zIndex:c.options.zIndex}),c.$slides.eq(a).animate({opacity:1},c.options.speed,c.options.easing,b)):(c.applyTransition(a),c.$slides.eq(a).css({opacity:1,zIndex:c.options.zIndex}),b&&setTimeout(function(){c.disableTransition(a),b.call()},c.options.speed))},b.prototype.fadeSlideOut=function(a){var b=this;b.cssTransitions===!1?b.$slides.eq(a).animate({opacity:0,zIndex:b.options.zIndex-2},b.options.speed,b.options.easing):(b.applyTransition(a),b.$slides.eq(a).css({opacity:0,zIndex:b.options.zIndex-2}))},b.prototype.filterSlides=b.prototype.slickFilter=function(a){var b=this;null!==a&&(b.$slidesCache=b.$slides,b.unload(),b.$slideTrack.children(this.options.slide).detach(),b.$slidesCache.filter(a).appendTo(b.$slideTrack),b.reinit())},b.prototype.getCurrent=b.prototype.slickCurrentSlide=function(){var a=this;return a.currentSlide},b.prototype.getDotCount=function(){var a=this,b=0,c=0,d=0;if(a.options.infinite===!0)for(;b<a.slideCount;)++d,b=c+a.options.slidesToScroll,c+=a.options.slidesToScroll<=a.options.slidesToShow?a.options.slidesToScroll:a.options.slidesToShow;else if(a.options.centerMode===!0)d=a.slideCount;else for(;b<a.slideCount;)++d,b=c+a.options.slidesToScroll,c+=a.options.slidesToScroll<=a.options.slidesToShow?a.options.slidesToScroll:a.options.slidesToShow;return d-1},b.prototype.getLeft=function(a){var c,d,f,b=this,e=0;return b.slideOffset=0,d=b.$slides.first().outerHeight(!0),b.options.infinite===!0?(b.slideCount>b.options.slidesToShow&&(b.slideOffset=b.slideWidth*b.options.slidesToShow*-1,e=d*b.options.slidesToShow*-1),b.slideCount%b.options.slidesToScroll!==0&&a+b.options.slidesToScroll>b.slideCount&&b.slideCount>b.options.slidesToShow&&(a>b.slideCount?(b.slideOffset=(b.options.slidesToShow-(a-b.slideCount))*b.slideWidth*-1,e=(b.options.slidesToShow-(a-b.slideCount))*d*-1):(b.slideOffset=b.slideCount%b.options.slidesToScroll*b.slideWidth*-1,e=b.slideCount%b.options.slidesToScroll*d*-1))):a+b.options.slidesToShow>b.slideCount&&(b.slideOffset=(a+b.options.slidesToShow-b.slideCount)*b.slideWidth,e=(a+b.options.slidesToShow-b.slideCount)*d),b.slideCount<=b.options.slidesToShow&&(b.slideOffset=0,e=0),b.options.centerMode===!0&&b.options.infinite===!0?b.slideOffset+=b.slideWidth*Math.floor(b.options.slidesToShow/2)-b.slideWidth:b.options.centerMode===!0&&(b.slideOffset=0,b.slideOffset+=b.slideWidth*Math.floor(b.options.slidesToShow/2)),c=b.options.vertical===!1?a*b.slideWidth*-1+b.slideOffset:a*d*-1+e,b.options.variableWidth===!0&&(f=b.slideCount<=b.options.slidesToShow||b.options.infinite===!1?b.$slideTrack.children(".slick-slide").eq(a):b.$slideTrack.children(".slick-slide").eq(a+b.options.slidesToShow),c=b.options.rtl===!0?f[0]?-1*(b.$slideTrack.width()-f[0].offsetLeft-f.width()):0:f[0]?-1*f[0].offsetLeft:0,b.options.centerMode===!0&&(f=b.slideCount<=b.options.slidesToShow||b.options.infinite===!1?b.$slideTrack.children(".slick-slide").eq(a):b.$slideTrack.children(".slick-slide").eq(a+b.options.slidesToShow+1),c=b.options.rtl===!0?f[0]?-1*(b.$slideTrack.width()-f[0].offsetLeft-f.width()):0:f[0]?-1*f[0].offsetLeft:0,c+=(b.$list.width()-f.outerWidth())/2)),c},b.prototype.getOption=b.prototype.slickGetOption=function(a){var b=this;return b.options[a]},b.prototype.getNavigableIndexes=function(){var e,a=this,b=0,c=0,d=[];for(a.options.infinite===!1?e=a.slideCount:(b=-1*a.options.slidesToScroll,c=-1*a.options.slidesToScroll,e=2*a.slideCount);e>b;)d.push(b),b=c+a.options.slidesToScroll,c+=a.options.slidesToScroll<=a.options.slidesToShow?a.options.slidesToScroll:a.options.slidesToShow;return d},b.prototype.getSlick=function(){return this},b.prototype.getSlideCount=function(){var c,d,e,b=this;return e=b.options.centerMode===!0?b.slideWidth*Math.floor(b.options.slidesToShow/2):0,b.options.swipeToSlide===!0?(b.$slideTrack.find(".slick-slide").each(function(c,f){return f.offsetLeft-e+a(f).outerWidth()/2>-1*b.swipeLeft?(d=f,!1):void 0}),c=Math.abs(a(d).attr("data-slick-index")-b.currentSlide)||1):b.options.slidesToScroll},b.prototype.goTo=b.prototype.slickGoTo=function(a,b){var c=this;c.changeSlide({data:{message:"index",index:parseInt(a)}},b)},b.prototype.init=function(b){var c=this;a(c.$slider).hasClass("slick-initialized")||(a(c.$slider).addClass("slick-initialized"),c.buildRows(),c.buildOut(),c.setProps(),c.startLoad(),c.loadSlider(),c.initializeEvents(),c.updateArrows(),c.updateDots()),b&&c.$slider.trigger("init",[c]),c.options.accessibility===!0&&c.initADA()},b.prototype.initArrowEvents=function(){var a=this;a.options.arrows===!0&&a.slideCount>a.options.slidesToShow&&(a.$prevArrow.on("click.slick",{message:"previous"},a.changeSlide),a.$nextArrow.on("click.slick",{message:"next"},a.changeSlide))},b.prototype.initDotEvents=function(){var b=this;b.options.dots===!0&&b.slideCount>b.options.slidesToShow&&a("li",b.$dots).on("click.slick",{message:"index"},b.changeSlide),b.options.dots===!0&&b.options.pauseOnDotsHover===!0&&b.options.autoplay===!0&&a("li",b.$dots).on("mouseenter.slick",a.proxy(b.setPaused,b,!0)).on("mouseleave.slick",a.proxy(b.setPaused,b,!1))},b.prototype.initializeEvents=function(){var b=this;b.initArrowEvents(),b.initDotEvents(),b.$list.on("touchstart.slick mousedown.slick",{action:"start"},b.swipeHandler),b.$list.on("touchmove.slick mousemove.slick",{action:"move"},b.swipeHandler),b.$list.on("touchend.slick mouseup.slick",{action:"end"},b.swipeHandler),b.$list.on("touchcancel.slick mouseleave.slick",{action:"end"},b.swipeHandler),b.$list.on("click.slick",b.clickHandler),a(document).on(b.visibilityChange,a.proxy(b.visibility,b)),b.$list.on("mouseenter.slick",a.proxy(b.setPaused,b,!0)),b.$list.on("mouseleave.slick",a.proxy(b.setPaused,b,!1)),b.options.accessibility===!0&&b.$list.on("keydown.slick",b.keyHandler),b.options.focusOnSelect===!0&&a(b.$slideTrack).children().on("click.slick",b.selectHandler),a(window).on("orientationchange.slick.slick-"+b.instanceUid,a.proxy(b.orientationChange,b)),a(window).on("resize.slick.slick-"+b.instanceUid,a.proxy(b.resize,b)),a("[draggable!=true]",b.$slideTrack).on("dragstart",b.preventDefault),a(window).on("load.slick.slick-"+b.instanceUid,b.setPosition),a(document).on("ready.slick.slick-"+b.instanceUid,b.setPosition)},b.prototype.initUI=function(){var a=this;a.options.arrows===!0&&a.slideCount>a.options.slidesToShow&&(a.$prevArrow.show(),a.$nextArrow.show()),a.options.dots===!0&&a.slideCount>a.options.slidesToShow&&a.$dots.show(),a.options.autoplay===!0&&a.autoPlay()},b.prototype.keyHandler=function(a){var b=this;a.target.tagName.match("TEXTAREA|INPUT|SELECT")||(37===a.keyCode&&b.options.accessibility===!0?b.changeSlide({data:{message:"previous"}}):39===a.keyCode&&b.options.accessibility===!0&&b.changeSlide({data:{message:"next"}}))},b.prototype.lazyLoad=function(){function g(b){a("img[data-lazy]",b).each(function(){var b=a(this),c=a(this).attr("data-lazy"),d=document.createElement("img");d.onload=function(){b.animate({opacity:0},100,function(){b.attr("src",c).animate({opacity:1},200,function(){b.removeAttr("data-lazy").removeClass("slick-loading")})})},d.src=c})}var c,d,e,f,b=this;b.options.centerMode===!0?b.options.infinite===!0?(e=b.currentSlide+(b.options.slidesToShow/2+1),f=e+b.options.slidesToShow+2):(e=Math.max(0,b.currentSlide-(b.options.slidesToShow/2+1)),f=2+(b.options.slidesToShow/2+1)+b.currentSlide):(e=b.options.infinite?b.options.slidesToShow+b.currentSlide:b.currentSlide,f=e+b.options.slidesToShow,b.options.fade===!0&&(e>0&&e--,f<=b.slideCount&&f++)),c=b.$slider.find(".slick-slide").slice(e,f),g(c),b.slideCount<=b.options.slidesToShow?(d=b.$slider.find(".slick-slide"),g(d)):b.currentSlide>=b.slideCount-b.options.slidesToShow?(d=b.$slider.find(".slick-cloned").slice(0,b.options.slidesToShow),g(d)):0===b.currentSlide&&(d=b.$slider.find(".slick-cloned").slice(-1*b.options.slidesToShow),g(d))},b.prototype.loadSlider=function(){var a=this;a.setPosition(),a.$slideTrack.css({opacity:1}),a.$slider.removeClass("slick-loading"),a.initUI(),"progressive"===a.options.lazyLoad&&a.progressiveLazyLoad()},b.prototype.next=b.prototype.slickNext=function(){var a=this;a.changeSlide({data:{message:"next"}})},b.prototype.orientationChange=function(){var a=this;a.checkResponsive(),a.setPosition()},b.prototype.pause=b.prototype.slickPause=function(){var a=this;a.autoPlayClear(),a.paused=!0},b.prototype.play=b.prototype.slickPlay=function(){var a=this;a.paused=!1,a.autoPlay()},b.prototype.postSlide=function(a){var b=this;b.$slider.trigger("afterChange",[b,a]),b.animating=!1,b.setPosition(),b.swipeLeft=null,b.options.autoplay===!0&&b.paused===!1&&b.autoPlay(),b.options.accessibility===!0&&b.initADA()},b.prototype.prev=b.prototype.slickPrev=function(){var a=this;a.changeSlide({data:{message:"previous"}})},b.prototype.preventDefault=function(a){a.preventDefault()},b.prototype.progressiveLazyLoad=function(){var c,d,b=this;c=a("img[data-lazy]",b.$slider).length,c>0&&(d=a("img[data-lazy]",b.$slider).first(),d.attr("src",null),d.attr("src",d.attr("data-lazy")).removeClass("slick-loading").load(function(){d.removeAttr("data-lazy"),b.progressiveLazyLoad(),b.options.adaptiveHeight===!0&&b.setPosition()}).error(function(){d.removeAttr("data-lazy"),b.progressiveLazyLoad()}))},b.prototype.refresh=function(b){var d,e,c=this;e=c.slideCount-c.options.slidesToShow,c.options.infinite||(c.slideCount<=c.options.slidesToShow?c.currentSlide=0:c.currentSlide>e&&(c.currentSlide=e)),d=c.currentSlide,c.destroy(!0),a.extend(c,c.initials,{currentSlide:d}),c.init(),b||c.changeSlide({data:{message:"index",index:d}},!1)},b.prototype.registerBreakpoints=function(){var c,d,e,b=this,f=b.options.responsive||null;if("array"===a.type(f)&&f.length){b.respondTo=b.options.respondTo||"window";for(c in f)if(e=b.breakpoints.length-1,d=f[c].breakpoint,f.hasOwnProperty(c)){for(;e>=0;)b.breakpoints[e]&&b.breakpoints[e]===d&&b.breakpoints.splice(e,1),e--;b.breakpoints.push(d),b.breakpointSettings[d]=f[c].settings}b.breakpoints.sort(function(a,c){return b.options.mobileFirst?a-c:c-a})}},b.prototype.reinit=function(){var b=this;b.$slides=b.$slideTrack.children(b.options.slide).addClass("slick-slide"),b.slideCount=b.$slides.length,b.currentSlide>=b.slideCount&&0!==b.currentSlide&&(b.currentSlide=b.currentSlide-b.options.slidesToScroll),b.slideCount<=b.options.slidesToShow&&(b.currentSlide=0),b.registerBreakpoints(),b.setProps(),b.setupInfinite(),b.buildArrows(),b.updateArrows(),b.initArrowEvents(),b.buildDots(),b.updateDots(),b.initDotEvents(),b.checkResponsive(!1,!0),b.options.focusOnSelect===!0&&a(b.$slideTrack).children().on("click.slick",b.selectHandler),b.setSlideClasses(0),b.setPosition(),b.$slider.trigger("reInit",[b]),b.options.autoplay===!0&&b.focusHandler()},b.prototype.resize=function(){var b=this;a(window).width()!==b.windowWidth&&(clearTimeout(b.windowDelay),b.windowDelay=window.setTimeout(function(){b.windowWidth=a(window).width(),b.checkResponsive(),b.unslicked||b.setPosition()},50))},b.prototype.removeSlide=b.prototype.slickRemove=function(a,b,c){var d=this;return"boolean"==typeof a?(b=a,a=b===!0?0:d.slideCount-1):a=b===!0?--a:a,d.slideCount<1||0>a||a>d.slideCount-1?!1:(d.unload(),c===!0?d.$slideTrack.children().remove():d.$slideTrack.children(this.options.slide).eq(a).remove(),d.$slides=d.$slideTrack.children(this.options.slide),d.$slideTrack.children(this.options.slide).detach(),d.$slideTrack.append(d.$slides),d.$slidesCache=d.$slides,void d.reinit())},b.prototype.setCSS=function(a){var d,e,b=this,c={};b.options.rtl===!0&&(a=-a),d="left"==b.positionProp?Math.ceil(a)+"px":"0px",e="top"==b.positionProp?Math.ceil(a)+"px":"0px",c[b.positionProp]=a,b.transformsEnabled===!1?b.$slideTrack.css(c):(c={},b.cssTransitions===!1?(c[b.animType]="translate("+d+", "+e+")",b.$slideTrack.css(c)):(c[b.animType]="translate3d("+d+", "+e+", 0px)",b.$slideTrack.css(c)))},b.prototype.setDimensions=function(){var a=this;a.options.vertical===!1?a.options.centerMode===!0&&a.$list.css({padding:"0px "+a.options.centerPadding}):(a.$list.height(a.$slides.first().outerHeight(!0)*a.options.slidesToShow),a.options.centerMode===!0&&a.$list.css({padding:a.options.centerPadding+" 0px"})),a.listWidth=a.$list.width(),a.listHeight=a.$list.height(),a.options.vertical===!1&&a.options.variableWidth===!1?(a.slideWidth=Math.ceil(a.listWidth/a.options.slidesToShow),a.$slideTrack.width(Math.ceil(a.slideWidth*a.$slideTrack.children(".slick-slide").length))):a.options.variableWidth===!0?a.$slideTrack.width(5e3*a.slideCount):(a.slideWidth=Math.ceil(a.listWidth),a.$slideTrack.height(Math.ceil(a.$slides.first().outerHeight(!0)*a.$slideTrack.children(".slick-slide").length)));var b=a.$slides.first().outerWidth(!0)-a.$slides.first().width();a.options.variableWidth===!1&&a.$slideTrack.children(".slick-slide").width(a.slideWidth-b)},b.prototype.setFade=function(){var c,b=this;b.$slides.each(function(d,e){c=b.slideWidth*d*-1,b.options.rtl===!0?a(e).css({position:"relative",right:c,top:0,zIndex:b.options.zIndex-2,opacity:0}):a(e).css({position:"relative",left:c,top:0,zIndex:b.options.zIndex-2,opacity:0})}),b.$slides.eq(b.currentSlide).css({zIndex:b.options.zIndex-1,opacity:1})},b.prototype.setHeight=function(){var a=this;if(1===a.options.slidesToShow&&a.options.adaptiveHeight===!0&&a.options.vertical===!1){var b=a.$slides.eq(a.currentSlide).outerHeight(!0);a.$list.css("height",b)}},b.prototype.setOption=b.prototype.slickSetOption=function(b,c,d){var f,g,e=this;if("responsive"===b&&"array"===a.type(c))for(g in c)if("array"!==a.type(e.options.responsive))e.options.responsive=[c[g]];else{for(f=e.options.responsive.length-1;f>=0;)e.options.responsive[f].breakpoint===c[g].breakpoint&&e.options.responsive.splice(f,1),f--;e.options.responsive.push(c[g])}else e.options[b]=c;d===!0&&(e.unload(),e.reinit())},b.prototype.setPosition=function(){var a=this;a.setDimensions(),a.setHeight(),a.options.fade===!1?a.setCSS(a.getLeft(a.currentSlide)):a.setFade(),a.$slider.trigger("setPosition",[a])},b.prototype.setProps=function(){var a=this,b=document.body.style;a.positionProp=a.options.vertical===!0?"top":"left","top"===a.positionProp?a.$slider.addClass("slick-vertical"):a.$slider.removeClass("slick-vertical"),(void 0!==b.WebkitTransition||void 0!==b.MozTransition||void 0!==b.msTransition)&&a.options.useCSS===!0&&(a.cssTransitions=!0),a.options.fade&&("number"==typeof a.options.zIndex?a.options.zIndex<3&&(a.options.zIndex=3):a.options.zIndex=a.defaults.zIndex),void 0!==b.OTransform&&(a.animType="OTransform",a.transformType="-o-transform",a.transitionType="OTransition",void 0===b.perspectiveProperty&&void 0===b.webkitPerspective&&(a.animType=!1)),void 0!==b.MozTransform&&(a.animType="MozTransform",a.transformType="-moz-transform",a.transitionType="MozTransition",void 0===b.perspectiveProperty&&void 0===b.MozPerspective&&(a.animType=!1)),void 0!==b.webkitTransform&&(a.animType="webkitTransform",a.transformType="-webkit-transform",a.transitionType="webkitTransition",void 0===b.perspectiveProperty&&void 0===b.webkitPerspective&&(a.animType=!1)),void 0!==b.msTransform&&(a.animType="msTransform",a.transformType="-ms-transform",a.transitionType="msTransition",void 0===b.msTransform&&(a.animType=!1)),void 0!==b.transform&&a.animType!==!1&&(a.animType="transform",a.transformType="transform",a.transitionType="transition"),a.transformsEnabled=a.options.useTransform&&null!==a.animType&&a.animType!==!1},b.prototype.setSlideClasses=function(a){var c,d,e,f,b=this;d=b.$slider.find(".slick-slide").removeClass("slick-active slick-center slick-current").attr("aria-hidden","true"),b.$slides.eq(a).addClass("slick-current"),b.options.centerMode===!0?(c=Math.floor(b.options.slidesToShow/2),b.options.infinite===!0&&(a>=c&&a<=b.slideCount-1-c?b.$slides.slice(a-c,a+c+1).addClass("slick-active").attr("aria-hidden","false"):(e=b.options.slidesToShow+a,d.slice(e-c+1,e+c+2).addClass("slick-active").attr("aria-hidden","false")),0===a?d.eq(d.length-1-b.options.slidesToShow).addClass("slick-center"):a===b.slideCount-1&&d.eq(b.options.slidesToShow).addClass("slick-center")),b.$slides.eq(a).addClass("slick-center")):a>=0&&a<=b.slideCount-b.options.slidesToShow?b.$slides.slice(a,a+b.options.slidesToShow).addClass("slick-active").attr("aria-hidden","false"):d.length<=b.options.slidesToShow?d.addClass("slick-active").attr("aria-hidden","false"):(f=b.slideCount%b.options.slidesToShow,e=b.options.infinite===!0?b.options.slidesToShow+a:a,b.options.slidesToShow==b.options.slidesToScroll&&b.slideCount-a<b.options.slidesToShow?d.slice(e-(b.options.slidesToShow-f),e+f).addClass("slick-active").attr("aria-hidden","false"):d.slice(e,e+b.options.slidesToShow).addClass("slick-active").attr("aria-hidden","false")),"ondemand"===b.options.lazyLoad&&b.lazyLoad()},b.prototype.setupInfinite=function(){var c,d,e,b=this;if(b.options.fade===!0&&(b.options.centerMode=!1),b.options.infinite===!0&&b.options.fade===!1&&(d=null,b.slideCount>b.options.slidesToShow)){for(e=b.options.centerMode===!0?b.options.slidesToShow+1:b.options.slidesToShow,c=b.slideCount;c>b.slideCount-e;c-=1)d=c-1,a(b.$slides[d]).clone(!0).attr("id","").attr("data-slick-index",d-b.slideCount).prependTo(b.$slideTrack).addClass("slick-cloned");for(c=0;e>c;c+=1)d=c,a(b.$slides[d]).clone(!0).attr("id","").attr("data-slick-index",d+b.slideCount).appendTo(b.$slideTrack).addClass("slick-cloned");b.$slideTrack.find(".slick-cloned").find("[id]").each(function(){a(this).attr("id","")})}},b.prototype.setPaused=function(a){var b=this;b.options.autoplay===!0&&b.options.pauseOnHover===!0&&(b.paused=a,a?b.autoPlayClear():b.autoPlay())},b.prototype.selectHandler=function(b){var c=this,d=a(b.target).is(".slick-slide")?a(b.target):a(b.target).parents(".slick-slide"),e=parseInt(d.attr("data-slick-index"));return e||(e=0),c.slideCount<=c.options.slidesToShow?(c.setSlideClasses(e),void c.asNavFor(e)):void c.slideHandler(e)},b.prototype.slideHandler=function(a,b,c){var d,e,f,g,h=null,i=this;return b=b||!1,i.animating===!0&&i.options.waitForAnimate===!0||i.options.fade===!0&&i.currentSlide===a||i.slideCount<=i.options.slidesToShow?void 0:(b===!1&&i.asNavFor(a),d=a,h=i.getLeft(d),g=i.getLeft(i.currentSlide),i.currentLeft=null===i.swipeLeft?g:i.swipeLeft,i.options.infinite===!1&&i.options.centerMode===!1&&(0>a||a>i.getDotCount()*i.options.slidesToScroll)?void(i.options.fade===!1&&(d=i.currentSlide,c!==!0?i.animateSlide(g,function(){i.postSlide(d);
+}):i.postSlide(d))):i.options.infinite===!1&&i.options.centerMode===!0&&(0>a||a>i.slideCount-i.options.slidesToScroll)?void(i.options.fade===!1&&(d=i.currentSlide,c!==!0?i.animateSlide(g,function(){i.postSlide(d)}):i.postSlide(d))):(i.options.autoplay===!0&&clearInterval(i.autoPlayTimer),e=0>d?i.slideCount%i.options.slidesToScroll!==0?i.slideCount-i.slideCount%i.options.slidesToScroll:i.slideCount+d:d>=i.slideCount?i.slideCount%i.options.slidesToScroll!==0?0:d-i.slideCount:d,i.animating=!0,i.$slider.trigger("beforeChange",[i,i.currentSlide,e]),f=i.currentSlide,i.currentSlide=e,i.setSlideClasses(i.currentSlide),i.updateDots(),i.updateArrows(),i.options.fade===!0?(c!==!0?(i.fadeSlideOut(f),i.fadeSlide(e,function(){i.postSlide(e)})):i.postSlide(e),void i.animateHeight()):void(c!==!0?i.animateSlide(h,function(){i.postSlide(e)}):i.postSlide(e))))},b.prototype.startLoad=function(){var a=this;a.options.arrows===!0&&a.slideCount>a.options.slidesToShow&&(a.$prevArrow.hide(),a.$nextArrow.hide()),a.options.dots===!0&&a.slideCount>a.options.slidesToShow&&a.$dots.hide(),a.$slider.addClass("slick-loading")},b.prototype.swipeDirection=function(){var a,b,c,d,e=this;return a=e.touchObject.startX-e.touchObject.curX,b=e.touchObject.startY-e.touchObject.curY,c=Math.atan2(b,a),d=Math.round(180*c/Math.PI),0>d&&(d=360-Math.abs(d)),45>=d&&d>=0?e.options.rtl===!1?"left":"right":360>=d&&d>=315?e.options.rtl===!1?"left":"right":d>=135&&225>=d?e.options.rtl===!1?"right":"left":e.options.verticalSwiping===!0?d>=35&&135>=d?"left":"right":"vertical"},b.prototype.swipeEnd=function(a){var c,b=this;if(b.dragging=!1,b.shouldClick=b.touchObject.swipeLength>10?!1:!0,void 0===b.touchObject.curX)return!1;if(b.touchObject.edgeHit===!0&&b.$slider.trigger("edge",[b,b.swipeDirection()]),b.touchObject.swipeLength>=b.touchObject.minSwipe)switch(b.swipeDirection()){case"left":c=b.options.swipeToSlide?b.checkNavigable(b.currentSlide+b.getSlideCount()):b.currentSlide+b.getSlideCount(),b.slideHandler(c),b.currentDirection=0,b.touchObject={},b.$slider.trigger("swipe",[b,"left"]);break;case"right":c=b.options.swipeToSlide?b.checkNavigable(b.currentSlide-b.getSlideCount()):b.currentSlide-b.getSlideCount(),b.slideHandler(c),b.currentDirection=1,b.touchObject={},b.$slider.trigger("swipe",[b,"right"])}else b.touchObject.startX!==b.touchObject.curX&&(b.slideHandler(b.currentSlide),b.touchObject={})},b.prototype.swipeHandler=function(a){var b=this;if(!(b.options.swipe===!1||"ontouchend"in document&&b.options.swipe===!1||b.options.draggable===!1&&-1!==a.type.indexOf("mouse")))switch(b.touchObject.fingerCount=a.originalEvent&&void 0!==a.originalEvent.touches?a.originalEvent.touches.length:1,b.touchObject.minSwipe=b.listWidth/b.options.touchThreshold,b.options.verticalSwiping===!0&&(b.touchObject.minSwipe=b.listHeight/b.options.touchThreshold),a.data.action){case"start":b.swipeStart(a);break;case"move":b.swipeMove(a);break;case"end":b.swipeEnd(a)}},b.prototype.swipeMove=function(a){var d,e,f,g,h,b=this;return h=void 0!==a.originalEvent?a.originalEvent.touches:null,!b.dragging||h&&1!==h.length?!1:(d=b.getLeft(b.currentSlide),b.touchObject.curX=void 0!==h?h[0].pageX:a.clientX,b.touchObject.curY=void 0!==h?h[0].pageY:a.clientY,b.touchObject.swipeLength=Math.round(Math.sqrt(Math.pow(b.touchObject.curX-b.touchObject.startX,2))),b.options.verticalSwiping===!0&&(b.touchObject.swipeLength=Math.round(Math.sqrt(Math.pow(b.touchObject.curY-b.touchObject.startY,2)))),e=b.swipeDirection(),"vertical"!==e?(void 0!==a.originalEvent&&b.touchObject.swipeLength>4&&a.preventDefault(),g=(b.options.rtl===!1?1:-1)*(b.touchObject.curX>b.touchObject.startX?1:-1),b.options.verticalSwiping===!0&&(g=b.touchObject.curY>b.touchObject.startY?1:-1),f=b.touchObject.swipeLength,b.touchObject.edgeHit=!1,b.options.infinite===!1&&(0===b.currentSlide&&"right"===e||b.currentSlide>=b.getDotCount()&&"left"===e)&&(f=b.touchObject.swipeLength*b.options.edgeFriction,b.touchObject.edgeHit=!0),b.options.vertical===!1?b.swipeLeft=d+f*g:b.swipeLeft=d+f*(b.$list.height()/b.listWidth)*g,b.options.verticalSwiping===!0&&(b.swipeLeft=d+f*g),b.options.fade===!0||b.options.touchMove===!1?!1:b.animating===!0?(b.swipeLeft=null,!1):void b.setCSS(b.swipeLeft)):void 0)},b.prototype.swipeStart=function(a){var c,b=this;return 1!==b.touchObject.fingerCount||b.slideCount<=b.options.slidesToShow?(b.touchObject={},!1):(void 0!==a.originalEvent&&void 0!==a.originalEvent.touches&&(c=a.originalEvent.touches[0]),b.touchObject.startX=b.touchObject.curX=void 0!==c?c.pageX:a.clientX,b.touchObject.startY=b.touchObject.curY=void 0!==c?c.pageY:a.clientY,void(b.dragging=!0))},b.prototype.unfilterSlides=b.prototype.slickUnfilter=function(){var a=this;null!==a.$slidesCache&&(a.unload(),a.$slideTrack.children(this.options.slide).detach(),a.$slidesCache.appendTo(a.$slideTrack),a.reinit())},b.prototype.unload=function(){var b=this;a(".slick-cloned",b.$slider).remove(),b.$dots&&b.$dots.remove(),b.$prevArrow&&b.htmlExpr.test(b.options.prevArrow)&&b.$prevArrow.remove(),b.$nextArrow&&b.htmlExpr.test(b.options.nextArrow)&&b.$nextArrow.remove(),b.$slides.removeClass("slick-slide slick-active slick-visible slick-current").attr("aria-hidden","true").css("width","")},b.prototype.unslick=function(a){var b=this;b.$slider.trigger("unslick",[b,a]),b.destroy()},b.prototype.updateArrows=function(){var b,a=this;b=Math.floor(a.options.slidesToShow/2),a.options.arrows===!0&&a.slideCount>a.options.slidesToShow&&!a.options.infinite&&(a.$prevArrow.removeClass("slick-disabled").attr("aria-disabled","false"),a.$nextArrow.removeClass("slick-disabled").attr("aria-disabled","false"),0===a.currentSlide?(a.$prevArrow.addClass("slick-disabled").attr("aria-disabled","true"),a.$nextArrow.removeClass("slick-disabled").attr("aria-disabled","false")):a.currentSlide>=a.slideCount-a.options.slidesToShow&&a.options.centerMode===!1?(a.$nextArrow.addClass("slick-disabled").attr("aria-disabled","true"),a.$prevArrow.removeClass("slick-disabled").attr("aria-disabled","false")):a.currentSlide>=a.slideCount-1&&a.options.centerMode===!0&&(a.$nextArrow.addClass("slick-disabled").attr("aria-disabled","true"),a.$prevArrow.removeClass("slick-disabled").attr("aria-disabled","false")))},b.prototype.updateDots=function(){var a=this;null!==a.$dots&&(a.$dots.find("li").removeClass("slick-active").attr("aria-hidden","true"),a.$dots.find("li").eq(Math.floor(a.currentSlide/a.options.slidesToScroll)).addClass("slick-active").attr("aria-hidden","false"))},b.prototype.visibility=function(){var a=this;document[a.hidden]?(a.paused=!0,a.autoPlayClear()):a.options.autoplay===!0&&(a.paused=!1,a.autoPlay())},b.prototype.initADA=function(){var b=this;b.$slides.add(b.$slideTrack.find(".slick-cloned")).attr({"aria-hidden":"true",tabindex:"-1"}).find("a, input, button, select").attr({tabindex:"-1"}),b.$slideTrack.attr("role","listbox"),b.$slides.not(b.$slideTrack.find(".slick-cloned")).each(function(c){a(this).attr({role:"option","aria-describedby":"slick-slide"+b.instanceUid+c})}),null!==b.$dots&&b.$dots.attr("role","tablist").find("li").each(function(c){a(this).attr({role:"presentation","aria-selected":"false","aria-controls":"navigation"+b.instanceUid+c,id:"slick-slide"+b.instanceUid+c})}).first().attr("aria-selected","true").end().find("button").attr("role","button").end().closest("div").attr("role","toolbar"),b.activateADA()},b.prototype.activateADA=function(){var a=this;a.$slideTrack.find(".slick-active").attr({"aria-hidden":"false"}).find("a, input, button, select").attr({tabindex:"0"})},b.prototype.focusHandler=function(){var b=this;b.$slider.on("focus.slick blur.slick","*",function(c){c.stopImmediatePropagation();var d=a(this);setTimeout(function(){b.isPlay&&(d.is(":focus")?(b.autoPlayClear(),b.paused=!0):(b.paused=!1,b.autoPlay()))},0)})},a.fn.slick=function(){var f,g,a=this,c=arguments[0],d=Array.prototype.slice.call(arguments,1),e=a.length;for(f=0;e>f;f++)if("object"==typeof c||"undefined"==typeof c?a[f].slick=new b(a[f],c):g=a[f].slick[c].apply(a[f].slick,d),"undefined"!=typeof g)return g;return a}});
+/*
+ * Javascript EXIF Reader 0.1.4
+ * Copyright (c) 2008 Jacob Seidelin, cupboy@gmail.com, http://blog.nihilogic.dk/
+ * Licensed under the MPL License [http://www.nihilogic.dk/licenses/mpl-license.txt]
+ * SOURCE: https://gist.github.com/christopherdebeer/3743287
+ */
+
+
+var EXIF = {};
+
+(function() {
+
+var bDebug = false;
+
+EXIF.Tags = {
+
+	// version tags
+	0x9000 : "ExifVersion",			// EXIF version
+	0xA000 : "FlashpixVersion",		// Flashpix format version
+
+	// colorspace tags
+	0xA001 : "ColorSpace",			// Color space information tag
+
+	// image configuration
+	0xA002 : "PixelXDimension",		// Valid width of meaningful image
+	0xA003 : "PixelYDimension",		// Valid height of meaningful image
+	0x9101 : "ComponentsConfiguration",	// Information about channels
+	0x9102 : "CompressedBitsPerPixel",	// Compressed bits per pixel
+
+	// user information
+	0x927C : "MakerNote",			// Any desired information written by the manufacturer
+	0x9286 : "UserComment",			// Comments by user
+
+	// related file
+	0xA004 : "RelatedSoundFile",		// Name of related sound file
+
+	// date and time
+	0x9003 : "DateTimeOriginal",		// Date and time when the original image was generated
+	0x9004 : "DateTimeDigitized",		// Date and time when the image was stored digitally
+	0x9290 : "SubsecTime",			// Fractions of seconds for DateTime
+	0x9291 : "SubsecTimeOriginal",		// Fractions of seconds for DateTimeOriginal
+	0x9292 : "SubsecTimeDigitized",		// Fractions of seconds for DateTimeDigitized
+
+	// picture-taking conditions
+	0x829A : "ExposureTime",		// Exposure time (in seconds)
+	0x829D : "FNumber",			// F number
+	0x8822 : "ExposureProgram",		// Exposure program
+	0x8824 : "SpectralSensitivity",		// Spectral sensitivity
+	0x8827 : "ISOSpeedRatings",		// ISO speed rating
+	0x8828 : "OECF",			// Optoelectric conversion factor
+	0x9201 : "ShutterSpeedValue",		// Shutter speed
+	0x9202 : "ApertureValue",		// Lens aperture
+	0x9203 : "BrightnessValue",		// Value of brightness
+	0x9204 : "ExposureBias",		// Exposure bias
+	0x9205 : "MaxApertureValue",		// Smallest F number of lens
+	0x9206 : "SubjectDistance",		// Distance to subject in meters
+	0x9207 : "MeteringMode", 		// Metering mode
+	0x9208 : "LightSource",			// Kind of light source
+	0x9209 : "Flash",			// Flash status
+	0x9214 : "SubjectArea",			// Location and area of main subject
+	0x920A : "FocalLength",			// Focal length of the lens in mm
+	0xA20B : "FlashEnergy",			// Strobe energy in BCPS
+	0xA20C : "SpatialFrequencyResponse",	// 
+	0xA20E : "FocalPlaneXResolution", 	// Number of pixels in width direction per FocalPlaneResolutionUnit
+	0xA20F : "FocalPlaneYResolution", 	// Number of pixels in height direction per FocalPlaneResolutionUnit
+	0xA210 : "FocalPlaneResolutionUnit", 	// Unit for measuring FocalPlaneXResolution and FocalPlaneYResolution
+	0xA214 : "SubjectLocation",		// Location of subject in image
+	0xA215 : "ExposureIndex",		// Exposure index selected on camera
+	0xA217 : "SensingMethod", 		// Image sensor type
+	0xA300 : "FileSource", 			// Image source (3 == DSC)
+	0xA301 : "SceneType", 			// Scene type (1 == directly photographed)
+	0xA302 : "CFAPattern",			// Color filter array geometric pattern
+	0xA401 : "CustomRendered",		// Special processing
+	0xA402 : "ExposureMode",		// Exposure mode
+	0xA403 : "WhiteBalance",		// 1 = auto white balance, 2 = manual
+	0xA404 : "DigitalZoomRation",		// Digital zoom ratio
+	0xA405 : "FocalLengthIn35mmFilm",	// Equivalent foacl length assuming 35mm film camera (in mm)
+	0xA406 : "SceneCaptureType",		// Type of scene
+	0xA407 : "GainControl",			// Degree of overall image gain adjustment
+	0xA408 : "Contrast",			// Direction of contrast processing applied by camera
+	0xA409 : "Saturation", 			// Direction of saturation processing applied by camera
+	0xA40A : "Sharpness",			// Direction of sharpness processing applied by camera
+	0xA40B : "DeviceSettingDescription",	// 
+	0xA40C : "SubjectDistanceRange",	// Distance to subject
+
+	// other tags
+	0xA005 : "InteroperabilityIFDPointer",
+	0xA420 : "ImageUniqueID"		// Identifier assigned uniquely to each image
+};
+
+EXIF.TiffTags = {
+	0x0100 : "ImageWidth",
+	0x0101 : "ImageHeight",
+	0x8769 : "ExifIFDPointer",
+	0x8825 : "GPSInfoIFDPointer",
+	0xA005 : "InteroperabilityIFDPointer",
+	0x0102 : "BitsPerSample",
+	0x0103 : "Compression",
+	0x0106 : "PhotometricInterpretation",
+	0x0112 : "Orientation",
+	0x0115 : "SamplesPerPixel",
+	0x011C : "PlanarConfiguration",
+	0x0212 : "YCbCrSubSampling",
+	0x0213 : "YCbCrPositioning",
+	0x011A : "XResolution",
+	0x011B : "YResolution",
+	0x0128 : "ResolutionUnit",
+	0x0111 : "StripOffsets",
+	0x0116 : "RowsPerStrip",
+	0x0117 : "StripByteCounts",
+	0x0201 : "JPEGInterchangeFormat",
+	0x0202 : "JPEGInterchangeFormatLength",
+	0x012D : "TransferFunction",
+	0x013E : "WhitePoint",
+	0x013F : "PrimaryChromaticities",
+	0x0211 : "YCbCrCoefficients",
+	0x0214 : "ReferenceBlackWhite",
+	0x0132 : "DateTime",
+	0x010E : "ImageDescription",
+	0x010F : "Make",
+	0x0110 : "Model",
+	0x0131 : "Software",
+	0x013B : "Artist",
+	0x8298 : "Copyright"
+}
+
+EXIF.GPSTags = {
+	0x0000 : "GPSVersionID",
+	0x0001 : "GPSLatitudeRef",
+	0x0002 : "GPSLatitude",
+	0x0003 : "GPSLongitudeRef",
+	0x0004 : "GPSLongitude",
+	0x0005 : "GPSAltitudeRef",
+	0x0006 : "GPSAltitude",
+	0x0007 : "GPSTimeStamp",
+	0x0008 : "GPSSatellites",
+	0x0009 : "GPSStatus",
+	0x000A : "GPSMeasureMode",
+	0x000B : "GPSDOP",
+	0x000C : "GPSSpeedRef",
+	0x000D : "GPSSpeed",
+	0x000E : "GPSTrackRef",
+	0x000F : "GPSTrack",
+	0x0010 : "GPSImgDirectionRef",
+	0x0011 : "GPSImgDirection",
+	0x0012 : "GPSMapDatum",
+	0x0013 : "GPSDestLatitudeRef",
+	0x0014 : "GPSDestLatitude",
+	0x0015 : "GPSDestLongitudeRef",
+	0x0016 : "GPSDestLongitude",
+	0x0017 : "GPSDestBearingRef",
+	0x0018 : "GPSDestBearing",
+	0x0019 : "GPSDestDistanceRef",
+	0x001A : "GPSDestDistance",
+	0x001B : "GPSProcessingMethod",
+	0x001C : "GPSAreaInformation",
+	0x001D : "GPSDateStamp",
+	0x001E : "GPSDifferential"
+}
+
+EXIF.StringValues = {
+	ExposureProgram : {
+		0 : "Not defined",
+		1 : "Manual",
+		2 : "Normal program",
+		3 : "Aperture priority",
+		4 : "Shutter priority",
+		5 : "Creative program",
+		6 : "Action program",
+		7 : "Portrait mode",
+		8 : "Landscape mode"
+	},
+	MeteringMode : {
+		0 : "Unknown",
+		1 : "Average",
+		2 : "CenterWeightedAverage",
+		3 : "Spot",
+		4 : "MultiSpot",
+		5 : "Pattern",
+		6 : "Partial",
+		255 : "Other"
+	},
+	LightSource : {
+		0 : "Unknown",
+		1 : "Daylight",
+		2 : "Fluorescent",
+		3 : "Tungsten (incandescent light)",
+		4 : "Flash",
+		9 : "Fine weather",
+		10 : "Cloudy weather",
+		11 : "Shade",
+		12 : "Daylight fluorescent (D 5700 - 7100K)",
+		13 : "Day white fluorescent (N 4600 - 5400K)",
+		14 : "Cool white fluorescent (W 3900 - 4500K)",
+		15 : "White fluorescent (WW 3200 - 3700K)",
+		17 : "Standard light A",
+		18 : "Standard light B",
+		19 : "Standard light C",
+		20 : "D55",
+		21 : "D65",
+		22 : "D75",
+		23 : "D50",
+		24 : "ISO studio tungsten",
+		255 : "Other"
+	},
+	Flash : {
+		0x0000 : "Flash did not fire",
+		0x0001 : "Flash fired",
+		0x0005 : "Strobe return light not detected",
+		0x0007 : "Strobe return light detected",
+		0x0009 : "Flash fired, compulsory flash mode",
+		0x000D : "Flash fired, compulsory flash mode, return light not detected",
+		0x000F : "Flash fired, compulsory flash mode, return light detected",
+		0x0010 : "Flash did not fire, compulsory flash mode",
+		0x0018 : "Flash did not fire, auto mode",
+		0x0019 : "Flash fired, auto mode",
+		0x001D : "Flash fired, auto mode, return light not detected",
+		0x001F : "Flash fired, auto mode, return light detected",
+		0x0020 : "No flash function",
+		0x0041 : "Flash fired, red-eye reduction mode",
+		0x0045 : "Flash fired, red-eye reduction mode, return light not detected",
+		0x0047 : "Flash fired, red-eye reduction mode, return light detected",
+		0x0049 : "Flash fired, compulsory flash mode, red-eye reduction mode",
+		0x004D : "Flash fired, compulsory flash mode, red-eye reduction mode, return light not detected",
+		0x004F : "Flash fired, compulsory flash mode, red-eye reduction mode, return light detected",
+		0x0059 : "Flash fired, auto mode, red-eye reduction mode",
+		0x005D : "Flash fired, auto mode, return light not detected, red-eye reduction mode",
+		0x005F : "Flash fired, auto mode, return light detected, red-eye reduction mode"
+	},
+	SensingMethod : {
+		1 : "Not defined",
+		2 : "One-chip color area sensor",
+		3 : "Two-chip color area sensor",
+		4 : "Three-chip color area sensor",
+		5 : "Color sequential area sensor",
+		7 : "Trilinear sensor",
+		8 : "Color sequential linear sensor"
+	},
+	SceneCaptureType : {
+		0 : "Standard",
+		1 : "Landscape",
+		2 : "Portrait",
+		3 : "Night scene"
+	},
+	SceneType : {
+		1 : "Directly photographed"
+	},
+	CustomRendered : {
+		0 : "Normal process",
+		1 : "Custom process"
+	},
+	WhiteBalance : {
+		0 : "Auto white balance",
+		1 : "Manual white balance"
+	},
+	GainControl : {
+		0 : "None",
+		1 : "Low gain up",
+		2 : "High gain up",
+		3 : "Low gain down",
+		4 : "High gain down"
+	},
+	Contrast : {
+		0 : "Normal",
+		1 : "Soft",
+		2 : "Hard"
+	},
+	Saturation : {
+		0 : "Normal",
+		1 : "Low saturation",
+		2 : "High saturation"
+	},
+	Sharpness : {
+		0 : "Normal",
+		1 : "Soft",
+		2 : "Hard"
+	},
+	SubjectDistanceRange : {
+		0 : "Unknown",
+		1 : "Macro",
+		2 : "Close view",
+		3 : "Distant view"
+	},
+	FileSource : {
+		3 : "DSC"
+	},
+
+	Components : {
+		0 : "",
+		1 : "Y",
+		2 : "Cb",
+		3 : "Cr",
+		4 : "R",
+		5 : "G",
+		6 : "B"
+	}
+}
+
+function addEvent(oElement, strEvent, fncHandler) 
+{
+	if (oElement.addEventListener) { 
+		oElement.addEventListener(strEvent, fncHandler, false); 
+	} else if (oElement.attachEvent) { 
+		oElement.attachEvent("on" + strEvent, fncHandler); 
+	}
+}
+
+
+function imageHasData(oImg) 
+{
+	return !!(oImg.exifdata);
+}
+
+function getImageData(oImg, fncCallback) 
+{
+	BinaryAjax(
+		oImg.src,
+		function(oHTTP) {
+			var oEXIF = findEXIFinJPEG(oHTTP.binaryResponse);
+			oImg.exifdata = oEXIF || {};
+			if (fncCallback) fncCallback();
+		}
+	)
+}
+
+function findEXIFinJPEG(oFile) {
+	var aMarkers = [];
+
+	if (oFile.getByteAt(0) != 0xFF || oFile.getByteAt(1) != 0xD8) {
+		return false; // not a valid jpeg
+	}
+
+	var iOffset = 2;
+	var iLength = oFile.getLength();
+	while (iOffset < iLength) {
+		if (oFile.getByteAt(iOffset) != 0xFF) {
+			if (bDebug) console.log("Not a valid marker at offset " + iOffset + ", found: " + oFile.getByteAt(iOffset));
+			return false; // not a valid marker, something is wrong
+		}
+
+		var iMarker = oFile.getByteAt(iOffset+1);
+
+		// we could implement handling for other markers here, 
+		// but we're only looking for 0xFFE1 for EXIF data
+
+		if (iMarker == 22400) {
+			if (bDebug) console.log("Found 0xFFE1 marker");
+			return readEXIFData(oFile, iOffset + 4, oFile.getShortAt(iOffset+2, true)-2);
+			iOffset += 2 + oFile.getShortAt(iOffset+2, true);
+
+		} else if (iMarker == 225) {
+			// 0xE1 = Application-specific 1 (for EXIF)
+			if (bDebug) console.log("Found 0xFFE1 marker");
+			return readEXIFData(oFile, iOffset + 4, oFile.getShortAt(iOffset+2, true)-2);
+
+		} else {
+			iOffset += 2 + oFile.getShortAt(iOffset+2, true);
+		}
+
+	}
+
+}
+
+
+function readTags(oFile, iTIFFStart, iDirStart, oStrings, bBigEnd) 
+{
+	var iEntries = oFile.getShortAt(iDirStart, bBigEnd);
+	var oTags = {};
+	for (var i=0;i<iEntries;i++) {
+		var iEntryOffset = iDirStart + i*12 + 2;
+		var strTag = oStrings[oFile.getShortAt(iEntryOffset, bBigEnd)];
+		if (!strTag && bDebug) console.log("Unknown tag: " + oFile.getShortAt(iEntryOffset, bBigEnd));
+		oTags[strTag] = readTagValue(oFile, iEntryOffset, iTIFFStart, iDirStart, bBigEnd);
+	}
+	return oTags;
+}
+
+
+function readTagValue(oFile, iEntryOffset, iTIFFStart, iDirStart, bBigEnd)
+{
+	var iType = oFile.getShortAt(iEntryOffset+2, bBigEnd);
+	var iNumValues = oFile.getLongAt(iEntryOffset+4, bBigEnd);
+	var iValueOffset = oFile.getLongAt(iEntryOffset+8, bBigEnd) + iTIFFStart;
+
+	switch (iType) {
+		case 1: // byte, 8-bit unsigned int
+		case 7: // undefined, 8-bit byte, value depending on field
+			if (iNumValues == 1) {
+				return oFile.getByteAt(iEntryOffset + 8, bBigEnd);
+			} else {
+				var iValOffset = iNumValues > 4 ? iValueOffset : (iEntryOffset + 8);
+				var aVals = [];
+				for (var n=0;n<iNumValues;n++) {
+					aVals[n] = oFile.getByteAt(iValOffset + n);
+				}
+				return aVals;
+			}
+			break;
+
+		case 2: // ascii, 8-bit byte
+			var iStringOffset = iNumValues > 4 ? iValueOffset : (iEntryOffset + 8);
+			return oFile.getStringAt(iStringOffset, iNumValues-1);
+			break;
+
+		case 3: // short, 16 bit int
+			if (iNumValues == 1) {
+				return oFile.getShortAt(iEntryOffset + 8, bBigEnd);
+			} else {
+				var iValOffset = iNumValues > 2 ? iValueOffset : (iEntryOffset + 8);
+				var aVals = [];
+				for (var n=0;n<iNumValues;n++) {
+					aVals[n] = oFile.getShortAt(iValOffset + 2*n, bBigEnd);
+				}
+				return aVals;
+			}
+			break;
+
+		case 4: // long, 32 bit int
+			if (iNumValues == 1) {
+				return oFile.getLongAt(iEntryOffset + 8, bBigEnd);
+			} else {
+				var aVals = [];
+				for (var n=0;n<iNumValues;n++) {
+					aVals[n] = oFile.getLongAt(iValueOffset + 4*n, bBigEnd);
+				}
+				return aVals;
+			}
+			break;
+		case 5:	// rational = two long values, first is numerator, second is denominator
+			if (iNumValues == 1) {
+				return oFile.getLongAt(iValueOffset, bBigEnd) / oFile.getLongAt(iValueOffset+4, bBigEnd);
+			} else {
+				var aVals = [];
+				for (var n=0;n<iNumValues;n++) {
+					aVals[n] = oFile.getLongAt(iValueOffset + 8*n, bBigEnd) / oFile.getLongAt(iValueOffset+4 + 8*n, bBigEnd);
+				}
+				return aVals;
+			}
+			break;
+		case 9: // slong, 32 bit signed int
+			if (iNumValues == 1) {
+				return oFile.getSLongAt(iEntryOffset + 8, bBigEnd);
+			} else {
+				var aVals = [];
+				for (var n=0;n<iNumValues;n++) {
+					aVals[n] = oFile.getSLongAt(iValueOffset + 4*n, bBigEnd);
+				}
+				return aVals;
+			}
+			break;
+		case 10: // signed rational, two slongs, first is numerator, second is denominator
+			if (iNumValues == 1) {
+				return oFile.getSLongAt(iValueOffset, bBigEnd) / oFile.getSLongAt(iValueOffset+4, bBigEnd);
+			} else {
+				var aVals = [];
+				for (var n=0;n<iNumValues;n++) {
+					aVals[n] = oFile.getSLongAt(iValueOffset + 8*n, bBigEnd) / oFile.getSLongAt(iValueOffset+4 + 8*n, bBigEnd);
+				}
+				return aVals;
+			}
+			break;
+	}
+}
+
+
+function readEXIFData(oFile, iStart, iLength) 
+{
+	if (oFile.getStringAt(iStart, 4) != "Exif") {
+		if (bDebug) console.log("Not valid EXIF data! " + oFile.getStringAt(iStart, 4));
+		return false;
+	}
+
+	var bBigEnd;
+
+	var iTIFFOffset = iStart + 6;
+
+	// test for TIFF validity and endianness
+	if (oFile.getShortAt(iTIFFOffset) == 0x4949) {
+		bBigEnd = false;
+	} else if (oFile.getShortAt(iTIFFOffset) == 0x4D4D) {
+		bBigEnd = true;
+	} else {
+		if (bDebug) console.log("Not valid TIFF data! (no 0x4949 or 0x4D4D)");
+		return false;
+	}
+
+	if (oFile.getShortAt(iTIFFOffset+2, bBigEnd) != 0x002A) {
+		if (bDebug) console.log("Not valid TIFF data! (no 0x002A)");
+		return false;
+	}
+
+	if (oFile.getLongAt(iTIFFOffset+4, bBigEnd) != 0x00000008) {
+		if (bDebug) console.log("Not valid TIFF data! (First offset not 8)", oFile.getShortAt(iTIFFOffset+4, bBigEnd));
+		return false;
+	}
+
+	var oTags = readTags(oFile, iTIFFOffset, iTIFFOffset+8, EXIF.TiffTags, bBigEnd);
+
+	if (oTags.ExifIFDPointer) {
+		var oEXIFTags = readTags(oFile, iTIFFOffset, iTIFFOffset + oTags.ExifIFDPointer, EXIF.Tags, bBigEnd);
+		for (var strTag in oEXIFTags) {
+			switch (strTag) {
+				case "LightSource" :
+				case "Flash" :
+				case "MeteringMode" :
+				case "ExposureProgram" :
+				case "SensingMethod" :
+				case "SceneCaptureType" :
+				case "SceneType" :
+				case "CustomRendered" :
+				case "WhiteBalance" : 
+				case "GainControl" : 
+				case "Contrast" :
+				case "Saturation" :
+				case "Sharpness" : 
+				case "SubjectDistanceRange" :
+				case "FileSource" :
+					oEXIFTags[strTag] = EXIF.StringValues[strTag][oEXIFTags[strTag]];
+					break;
+	
+				case "ExifVersion" :
+				case "FlashpixVersion" :
+					oEXIFTags[strTag] = String.fromCharCode(oEXIFTags[strTag][0], oEXIFTags[strTag][1], oEXIFTags[strTag][2], oEXIFTags[strTag][3]);
+					break;
+	
+				case "ComponentsConfiguration" : 
+					oEXIFTags[strTag] = 
+						EXIF.StringValues.Components[oEXIFTags[strTag][0]]
+						+ EXIF.StringValues.Components[oEXIFTags[strTag][1]]
+						+ EXIF.StringValues.Components[oEXIFTags[strTag][2]]
+						+ EXIF.StringValues.Components[oEXIFTags[strTag][3]];
+					break;
+			}
+			oTags[strTag] = oEXIFTags[strTag];
+		}
+	}
+
+	if (oTags.GPSInfoIFDPointer) {
+		var oGPSTags = readTags(oFile, iTIFFOffset, iTIFFOffset + oTags.GPSInfoIFDPointer, EXIF.GPSTags, bBigEnd);
+		for (var strTag in oGPSTags) {
+			switch (strTag) {
+				case "GPSVersionID" : 
+					oGPSTags[strTag] = oGPSTags[strTag][0] 
+						+ "." + oGPSTags[strTag][1] 
+						+ "." + oGPSTags[strTag][2] 
+						+ "." + oGPSTags[strTag][3];
+					break;
+			}
+			oTags[strTag] = oGPSTags[strTag];
+		}
+	}
+
+	return oTags;
+}
+
+
+EXIF.getData = function(oImg, fncCallback) 
+{
+	if (!oImg.complete) return false;
+	if (!imageHasData(oImg)) {
+		getImageData(oImg, fncCallback);
+	} else {
+		if (fncCallback) fncCallback();
+	}
+	return true;
+}
+
+EXIF.getTag = function(oImg, strTag) 
+{
+	if (!imageHasData(oImg)) return;
+	return oImg.exifdata[strTag];
+}
+
+EXIF.getAllTags = function(oImg) 
+{
+	if (!imageHasData(oImg)) return {};
+	var oData = oImg.exifdata;
+	var oAllTags = {};
+	for (var a in oData) {
+		if (oData.hasOwnProperty(a)) {
+			oAllTags[a] = oData[a];
+		}
+	}
+	return oAllTags;
+}
+
+
+EXIF.pretty = function(oImg) 
+{
+	if (!imageHasData(oImg)) return "";
+	var oData = oImg.exifdata;
+	var strPretty = "";
+	for (var a in oData) {
+		if (oData.hasOwnProperty(a)) {
+			if (typeof oData[a] == "object") {
+				strPretty += a + " : [" + oData[a].length + " values]\r\n";
+			} else {
+				strPretty += a + " : " + oData[a] + "\r\n";
+			}
+		}
+	}
+	return strPretty;
+}
+
+EXIF.readFromBinaryFile = function(oFile) {
+	return findEXIFinJPEG(oFile);
+}
+
+function loadAllImages() 
+{
+	var aImages = document.getElementsByTagName("img");
+	for (var i=0;i<aImages.length;i++) {
+		if (aImages[i].getAttribute("exif") == "true") {
+			if (!aImages[i].complete) {
+				addEvent(aImages[i], "load", 
+					function() {
+						EXIF.getData(this);
+					}
+				); 
+			} else {
+				EXIF.getData(aImages[i]);
+			}
+		}
+	}
+}
+
+addEvent(window, "load", loadAllImages); 
+
+})();
+
+
+(function (ELEMENT) {
+	ELEMENT.matches = ELEMENT.matches || ELEMENT.mozMatchesSelector || ELEMENT.msMatchesSelector || ELEMENT.oMatchesSelector || ELEMENT.webkitMatchesSelector || function matches(selector) {
+		var
+		element = this,
+		elements = (element.document || element.ownerDocument).querySelectorAll(selector),
+		index = 0;
+
+		while (elements[index] && elements[index] !== element) {
+			++index;
+		}
+
+		return elements[index] ? true : false;
+	};
+
+	ELEMENT.closest = ELEMENT.closest || function closest(selector) {
+		var element = this;
+
+		while (element) {
+			if (element.matches(selector)) {
+				break;
+			}
+
+			element = element.parentElement;
+		}
+
+		return element;
+	};
+}(Element.prototype));
+
+/*!
+ * A polyfill for Webkit's window.getMatchedCSSRules, based on
+ * https://gist.github.com/ydaniv/3033012
+ *
+ * @author: Yehonatan Daniv
+ * @author: ssafejava
+ * @author: Christian "Schepp" Schaefer <schaepp@gmx.de>
+ *
+ */
+
+'use strict';
+
+(function () {
+	// polyfill window.getMatchedCSSRules() in FireFox 6+
+	if (typeof window.getMatchedCSSRules === 'function') {
+		return;
+	}
+
+	var ELEMENT_RE = /[\w-]+/g,
+		ID_RE = /#[\w-]+/g,
+		CLASS_RE = /\.[\w-]+/g,
+		ATTR_RE = /\[[^\]]+\]/g,
+		// :not() pseudo-class does not add to specificity, but its content does as if it was outside it
+		PSEUDO_CLASSES_RE = /\:(?!not)[\w-]+(\(.*\))?/g,
+		PSEUDO_ELEMENTS_RE = /\:\:?(after|before|first-letter|first-line|selection)/g;
+
+	// convert an array-like object to array
+	var toArray = function (list) {
+		var items = [];
+		var i = 0;
+		var listLength = list.length;
+
+		for (; i < listLength; i++) {
+			items.push(list[i]);
+		}
+
+		return items;
+	};
+
+	// get host of stylesheet
+	var getCSSHost = function (href) {
+		var fakeLinkOfSheet = document.createElement('a');
+
+		fakeLinkOfSheet.href = href;
+
+		return fakeLinkOfSheet.host;
+	};
+
+	// handles extraction of `cssRules` as an `Array` from a stylesheet or something that behaves the same
+	var getSheetRules = function (stylesheet) {
+		var sheetMedia = stylesheet.media && stylesheet.media.mediaText;
+		var sheetHost;
+
+		// if this sheet is cross-origin and option is set skip it
+		if (objectFit.disableCrossDomain == 'true') {
+			sheetHost = getCSSHost(stylesheet.href);
+
+			if ((sheetHost !== window.location.host)) {
+				return [];
+			}
+		}
+
+
+		// if this sheet is disabled skip it
+		if (stylesheet.disabled) {
+			return [];
+		}
+
+		if (!window.matchMedia) {
+			if (sheetMedia && sheetMedia.length) {
+				return [];
+			}
+		}
+		// if this sheet's media is specified and doesn't match the viewport then skip it
+		else if (sheetMedia && sheetMedia.length && ! window.matchMedia(sheetMedia).matches) {
+			return [];
+		}
+
+		// get the style rules of this sheet
+		return toArray(stylesheet.cssRules);
+	};
+
+	var _find = function (string, re) {
+		var matches = string.match(re);
+
+		return re ? re.length : 0;
+	};
+
+	// calculates the specificity of a given `selector`
+	var calculateScore = function (selector) {
+		var score = [0, 0, 0];
+		var parts = selector.split(' ');
+		var part;
+		var match;
+
+		//TODO: clean the ':not' part since the last ELEMENT_RE will pick it up
+		while (part = parts.shift(), typeof part === 'string') {
+			// find all pseudo-elements
+			match = _find(part, PSEUDO_ELEMENTS_RE);
+			score[2] = match;
+			// and remove them
+			match && (part = part.replace(PSEUDO_ELEMENTS_RE, ''));
+			// find all pseudo-classes
+			match = _find(part, PSEUDO_CLASSES_RE);
+			score[1] = match;
+			// and remove them
+			match && (part = part.replace(PSEUDO_CLASSES_RE, ''));
+			// find all attributes
+			match = _find(part, ATTR_RE);
+			score[1] += match;
+			// and remove them
+			match && (part = part.replace(ATTR_RE, ''));
+			// find all IDs
+			match = _find(part, ID_RE);
+			score[0] = match;
+			// and remove them
+			match && (part = part.replace(ID_RE, ''));
+			// find all classes
+			match = _find(part, CLASS_RE);
+			score[1] += match;
+			// and remove them
+			match && (part = part.replace(CLASS_RE, ''));
+			// find all elements
+			score[2] += _find(part, ELEMENT_RE);
+		}
+
+		return parseInt(score.join(''), 10);
+	};
+
+	// returns the heights possible specificity score an element can get from a give rule's selectorText
+	var getSpecificityScore = function (element, selectorText) {
+		var selectors = selectorText.split(','),
+			selector, score, result = 0;
+
+		while (selector = selectors.shift()) {
+			if (element.closest(selector)) {
+				score = calculateScore(selector);
+				result = score > result ? score : result;
+			}
+		}
+
+		return result;
+	};
+
+	var sortBySpecificity = function (element, rules) {
+		// comparing function that sorts CSSStyleRules according to specificity of their `selectorText`
+		var compareSpecificity = function (a, b) {
+			return getSpecificityScore(element, b.selectorText) - getSpecificityScore(element, a.selectorText);
+		};
+
+		return rules.sort(compareSpecificity);
+	};
+
+	//TODO: not supporting 2nd argument for selecting pseudo elements
+	//TODO: not supporting 3rd argument for checking author style sheets only
+	window.getMatchedCSSRules = function (element) {  /*, pseudo, author_only*/
+		var styleSheets;
+		var result = [];
+		var sheet;
+		var rules;
+		var rule;
+
+		// get stylesheets and convert to a regular Array
+		styleSheets = toArray(window.document.styleSheets);
+
+		// assuming the browser hands us stylesheets in order of appearance
+		// we iterate them from the beginning to follow proper cascade order
+		while (sheet = styleSheets.shift()) {
+			// get the style rules of this sheet
+			rules = getSheetRules(sheet);
+
+			// loop the rules in order of appearance
+			while (rule = rules.shift()) {
+				// if this is an @import rule
+				if (rule.styleSheet) {
+					// insert the imported stylesheet's rules at the beginning of this stylesheet's rules
+					rules = getSheetRules(rule.styleSheet).concat(rules);
+					// and skip this rule
+					continue;
+				}
+				// if there's no stylesheet attribute BUT there IS a media attribute it's a media rule
+				else if (rule.media) {
+					// insert the contained rules of this media rule to the beginning of this stylesheet's rules
+					rules = getSheetRules(rule).concat(rules);
+					// and skip it
+					continue;
+				}
+
+				// check if this element matches this rule's selector
+				if (element.closest(rule.selectorText)) {
+					// push the rule to the results set
+					result.push(rule);
+				}
+			}
+		}
+		// sort according to specificity
+		return sortBySpecificity(element, result);
+	};
+}());
+
+/*
+ * raf.js
+ * https://github.com/ngryman/raf.js
+ *
+ * original requestAnimationFrame polyfill by Erik Möller
+ * inspired from paul_irish gist and post
+ *
+ * Copyright (c) 2013 ngryman
+ * Licensed under the MIT license.
+ */
+
+(function(window) {
+	var lastTime = 0,
+		vendors = ['webkit', 'moz'],
+		requestAnimationFrame = window.requestAnimationFrame,
+		cancelAnimationFrame = window.cancelAnimationFrame,
+		i = vendors.length;
+
+	// try to un-prefix existing raf
+	while (--i >= 0 && !requestAnimationFrame) {
+		requestAnimationFrame = window[vendors[i] + 'RequestAnimationFrame'];
+		cancelAnimationFrame = window[vendors[i] + 'CancelAnimationFrame'];
+	}
+
+	// polyfill with setTimeout fallback
+	// heavily inspired from @darius gist mod: https://gist.github.com/paulirish/1579671#comment-837945
+	if (!requestAnimationFrame || !cancelAnimationFrame) {
+		requestAnimationFrame = function(callback) {
+			var now = +new Date(), nextTime = Math.max(lastTime + 16, now);
+			return setTimeout(function() {
+				callback(lastTime = nextTime);
+			}, nextTime - now);
+		};
+
+		cancelAnimationFrame = clearTimeout;
+	}
+
+	// export to window
+	window.requestAnimationFrame = requestAnimationFrame;
+	window.cancelAnimationFrame = cancelAnimationFrame;
+}(window));
+
+/*!
+ * Polyfill CSS object-fit
+ * http://helloanselm.com/object-fit
+ *
+ * @author: Anselm Hannemann <hello@anselm-hannemann.com>
+ * @author: Christian "Schepp" Schaefer <schaepp@gmx.de>
+ * @version: 0.3.4
+ *
+ */
+
+(function (global) {
+
+	'use strict';
+
+	// Storage variable
+	var objectFit = {};
+
+	objectFit._debug = false;
+
+	objectFit.observer = null;
+
+	objectFit.disableCrossDomain = 'false';
+
+	objectFit.getComputedStyle = function(element, context) {
+		context = context || window;
+
+		if (context.getComputedStyle) {
+			return context.getComputedStyle(element, null);
+		}
+		else {
+			return element.currentStyle;
+		}
+	};
+
+	objectFit.getDefaultComputedStyle = function(element){
+		var newelement = element.cloneNode(true);
+		var styles = {};
+		var iframe = document.createElement('iframe');
+		document.body.appendChild(iframe);
+		iframe.contentWindow.document.open();
+		iframe.contentWindow.document.write('<body></body>');
+		iframe.contentWindow.document.body.appendChild(newelement);
+		iframe.contentWindow.document.close();
+
+		var defaultElement = iframe.contentWindow.document.querySelectorAll(element.nodeName.toLowerCase())[0];
+		var defaultComputedStyle = this.getComputedStyle(defaultElement, iframe.contentWindow);
+		var value;
+		var property;
+
+		for (property in defaultComputedStyle) {
+			if (defaultComputedStyle.getPropertyValue === true) {
+				value = defaultComputedStyle.getPropertyValue(property);
+			} else {
+				value = defaultComputedStyle[property];
+			}
+
+			if (value !== null) {
+				switch (property) {
+					default:
+						styles[property] = value;
+					break;
+
+					case 'width':
+					case 'height':
+					case 'minWidth':
+					case 'minHeight':
+					case 'maxWidth':
+					case 'maxHeight':
+					break;
+				}
+			}
+		}
+
+		document.body.removeChild(iframe);
+
+		return styles;
+	};
+
+	objectFit.getMatchedStyle = function(element, property){
+		// element property has highest priority
+		var val = null;
+		var inlineval = null;
+
+		if (element.style.getPropertyValue) {
+			inlineval = element.style.getPropertyValue(property);
+		} else if (element.currentStyle) {
+			inlineval = element.currentStyle[property];
+		}
+
+		// get matched rules
+		var rules = window.getMatchedCSSRules(element);
+		var i = rules.length;
+		var r;
+		var important;
+
+		if (i) {
+			// iterate the rules backwards
+			// rules are ordered by priority, highest last
+			for (; i --> 0;) {
+				r = rules[i];
+				important = r.style.getPropertyPriority(property);
+
+				// if set, only reset if important
+				if (val === null || important) {
+					val = r.style.getPropertyValue(property);
+
+					// done if important
+					if (important) {
+						break;
+					}
+				}
+			}
+		}
+
+		// if it's important, we are done
+		if (!val && inlineval !== null) {
+			val = inlineval;
+		}
+
+		return val;
+	};
+
+	// Detects orientation
+	objectFit.orientation = function(replacedElement) {
+		if (replacedElement.parentNode && replacedElement.parentNode.nodeName.toLowerCase() === 'x-object-fit') {
+			var width = replacedElement.naturalWidth || replacedElement.clientWidth;
+			var height = replacedElement.naturalHeight || replacedElement.clientHeight;
+			var parentWidth = replacedElement.parentNode.clientWidth;
+			var parentHeight = replacedElement.parentNode.clientHeight;
+
+			if (!height || width / height > parentWidth / parentHeight) {
+				if (replacedElement.getAttribute('data-x-object-relation') !== 'wider') {
+					replacedElement.setAttribute('data-x-object-relation','wider');
+					replacedElement.className = 'x-object-fit-wider';
+
+					if (this._debug && window.console) {
+						console.log('x-object-fit-wider');
+					}
+				}
+			} else {
+				if (replacedElement.getAttribute('data-x-object-relation') !== 'taller') {
+					replacedElement.setAttribute('data-x-object-relation','taller');
+					replacedElement.className = 'x-object-fit-taller';
+
+					if (this._debug && window.console) {
+						console.log('x-object-fit-taller');
+					}
+				}
+			}
+		}
+	};
+
+	objectFit.process = function(args) {
+		if (!args.selector || !args.replacedElements) {
+			return;
+		}
+
+		// Set option objectFit.disableCrossDomain
+		objectFit.disableCrossDomain = args.disableCrossDomain || 'false';
+
+		// Set option fit-type
+		args.fittype = args.fittype || 'none';
+
+		switch (args.fittype) {
+			default:
+				return;
+
+			case 'none':
+			case 'fill':
+			case 'contain':
+			case 'cover':
+			break;
+		}
+
+		// Set option replacedElements
+		var replacedElements = args.replacedElements;
+
+		if(!replacedElements.length) {
+			return;
+		}
+
+		for (var i = 0, replacedElementsLength = replacedElements.length; i < replacedElementsLength; i++) {
+			this.processElement(replacedElements[i], args);
+		}
+	};
+
+	objectFit.processElement = function(replacedElement, args) {
+		var property;
+		var value;
+		var replacedElementStyles = objectFit.getComputedStyle(replacedElement);
+		var replacedElementDefaultStyles = objectFit.getDefaultComputedStyle(replacedElement);
+		var wrapperElement = document.createElement('x-object-fit');
+
+		if (objectFit._debug && window.console) {
+			console.log('Applying to WRAPPER-------------------------------------------------------');
+		}
+
+		for (property in replacedElementStyles) {
+			switch (property) {
+				default:
+					value = objectFit.getMatchedStyle(replacedElement, property);
+
+					if (value !== null && value !== '') {
+						if (objectFit._debug && window.console) {
+							console.log(property + ': ' + value);
+						}
+
+						wrapperElement.style[property] = value;
+					}
+				break;
+
+				case 'length':
+				case 'parentRule':
+				break;
+			}
+		}
+
+		if (objectFit._debug && window.console) {
+			console.log('Applying to REPLACED ELEMENT-------------------------------------------------------');
+		}
+		for (property in replacedElementDefaultStyles) {
+			switch (property) {
+				default:
+					value = replacedElementDefaultStyles[property];
+
+					if (objectFit._debug && window.console && value !== '') {
+						console.log(property + ': ' + value);
+
+						if (replacedElement.style[property] === undefined) {
+							console.log('Indexed style properties (`' + property + '`) not supported in: ' + window.navigator.userAgent);
+						}
+					}
+
+					if (replacedElement.style[property]) {
+						replacedElement.style[property] = value; // should work in Firefox 35+ and all other browsers
+					} else {
+						replacedElement.style.property = value;
+					}
+				break;
+
+				case 'length':
+				case 'parentRule':
+				break;
+			}
+		}
+
+		wrapperElement.setAttribute('class','x-object-fit-' + args.fittype);
+		replacedElement.parentNode.insertBefore(wrapperElement, replacedElement);
+		wrapperElement.appendChild(replacedElement);
+
+		objectFit.orientation(replacedElement);
+
+		var resizeTimer = null;
+		var resizeAction = function () {
+			if (resizeTimer !== null) {
+				window.cancelAnimationFrame(resizeTimer);
+			}
+			resizeTimer = window.requestAnimationFrame(function(){
+				objectFit.orientation(replacedElement);
+			});
+		};
+
+		switch (args.fittype) {
+			default:
+			break;
+
+			case 'contain':
+			case 'cover':
+				if (window.addEventListener) {
+					replacedElement.addEventListener('load', resizeAction, false);
+					window.addEventListener('resize', resizeAction, false);
+					window.addEventListener('orientationchange', resizeAction, false);
+				} else {
+					replacedElement.attachEvent('onload', resizeAction);
+					window.attachEvent('onresize', resizeAction);
+				}
+			break;
+		}
+	};
+
+	objectFit.listen = function (args) {
+		var domInsertedAction = function (element){
+			var i = 0;
+			var argsLength = args.length;
+
+			for (; i < argsLength; i++) {
+				if ((element.mozMatchesSelector && element.mozMatchesSelector(args[i].selector)) ||
+					(element.msMatchesSelector && element.msMatchesSelector(args[i].selector)) ||
+					(element.oMatchesSelector && element.oMatchesSelector(args[i].selector)) ||
+					(element.webkitMatchesSelector && element.webkitMatchesSelector(args[i].selector))
+				) {
+					args[i].replacedElements = [element];
+					objectFit.process(args[i]);
+
+					if (objectFit._debug && window.console) {
+						console.log('Matching node inserted: ' + element.nodeName);
+					}
+				}
+			}
+		};
+
+		var domInsertedObserverFunction = function (element) {
+			objectFit.observer.disconnect();
+			domInsertedAction(element);
+			objectFit.observer.observe(document.documentElement, {
+				childList: true,
+				subtree: true
+			});
+		};
+
+		var domInsertedEventFunction = function (event) {
+			window.removeEventListener('DOMNodeInserted', domInsertedEventFunction, false);
+			domInsertedAction(event.target);
+			window.addEventListener('DOMNodeInserted', domInsertedEventFunction, false);
+		};
+
+		var domRemovedAction = function (element) {
+			if (element.nodeName.toLowerCase() === 'x-object-fit') {
+				element.parentNode.removeChild(element);
+
+				if (objectFit._debug && window.console) {
+					console.log('Matching node removed: ' + element.nodeName);
+				}
+			}
+		};
+
+		var domRemovedObserverFunction = function (element) {
+			objectFit.observer.disconnect();
+			domRemovedAction(element);
+			objectFit.observer.observe(document.documentElement, {
+				childList: true,
+				subtree: true
+			});
+		};
+
+		var domRemovedEventFunction = function (event) {
+			window.removeEventListener('DOMNodeRemoved', domRemovedEventFunction, false);
+			domRemovedAction(event.target.parentNode);
+			window.addEventListener('DOMNodeRemoved', domRemovedEventFunction, false);
+		};
+
+		if (window.MutationObserver) {
+			if (objectFit._debug && window.console) {
+				console.log('DOM MutationObserver');
+			}
+
+			this.observer = new MutationObserver(function(mutations) {
+				mutations.forEach(function(mutation) {
+					if (mutation.addedNodes && mutation.addedNodes.length) {
+						var nodes = mutation.addedNodes;
+						for (var i = 0, nodesLength = nodes.length; i < nodesLength; i++) {
+							domInsertedObserverFunction(nodes[i]);
+						}
+					}
+					if (mutation.removedNodes && mutation.removedNodes.length) {
+						domRemovedObserverFunction(mutation.target);
+					}
+				});
+			});
+
+			this.observer.observe(document.documentElement, {
+				childList: true,
+				subtree: true
+			});
+		} else if (window.addEventListener) {
+			if (objectFit._debug && window.console) {
+				console.log('DOM Mutation Events');
+			}
+
+			window.addEventListener('DOMNodeInserted', domInsertedEventFunction, false);
+			window.addEventListener('DOMNodeRemoved', domRemovedEventFunction, false);
+		}
+	};
+
+	objectFit.init = function (args) {
+		if (!args) {
+			return;
+		}
+
+		if (!(args instanceof Array)) {
+			args = [args];
+		}
+
+		var i = 0;
+		var argsLength = args.length;
+
+		for (; i < argsLength; i++) {
+			args[i].replacedElements = document.querySelectorAll(args[i].selector);
+			this.process(args[i]);
+		}
+
+		this.listen(args);
+	};
+
+	objectFit.polyfill = function (args) {
+		if('objectFit' in document.documentElement.style === false) {
+			if (objectFit._debug && window.console) {
+				console.log('object-fit not natively supported');
+			}
+
+			// If the library is loaded after document onload event
+			if (document.readyState === 'complete') {
+				objectFit.init(args);
+			} else {
+				// Otherwise attach event listeners
+				if (window.addEventListener) {
+					window.addEventListener('load', function(){
+						objectFit.init(args);
+					}, false);
+				} else {
+					window.attachEvent('onload', function(){
+						objectFit.init(args);
+					});
+				}
+			}
+		} else {
+			if (objectFit._debug && window.console) {
+				console.log('object-fit natively supported');
+			}
+		}
+	};
+
+	/*
+	 * AMD, module loader, global registration
+	 */
+
+	// Expose modal for loaders that implement the Node module pattern.
+	if (typeof module === 'object' && module && typeof module.exports === 'object') {
+		module.exports = objectFit;
+
+	// Register as an AMD module
+	} else if (typeof define === 'function' && define.amd) {
+		define([], function () { return objectFit; });
+
+	// Export into global space
+	} else if (typeof global === 'object' && typeof global.document === 'object') {
+		global.objectFit = objectFit;
+	}
+
+}(window));
+
+
+/*
+ * Binary Ajax 0.2
+ * Copyright (c) 2008 Jacob Seidelin, cupboy@gmail.com, http://blog.nihilogic.dk/
+ * Licensed under the MPL License [http://www.nihilogic.dk/licenses/mpl-license.txt]
+ */
+
+
+var BinaryFile = function(data, dataOffset, dataLength) {
+	var dataOffset = dataOffset || 0;
+	var dataLength = 0;
+
+	this.getRawData = function() {
+		return data;
+	}
+
+	if (typeof data == "string") {
+		dataLength = dataLength || data.length;
+
+		this.getByteAt = function(offset) {
+			return data.charCodeAt(offset + dataOffset) & 0xFF;
+		}
+	} else if (typeof data == "unknown") {
+		dataLength = dataLength || IEBinary_getLength(data);
+
+		this.getByteAt = function(offset) {
+			return IEBinary_getByteAt(data, offset + dataOffset);
+		}
+	} else {
+
+	}
+
+	this.getLength = function() {
+		return dataLength;
+	}
+
+	this.getSByteAt = function(offset) {
+		var byte = this.getByteAt(offset);
+		if (byte > 127)
+			return byte - 256;
+		else
+			return byte;
+	}
+
+	this.getShortAt = function(offset, bigEndian) {
+		var short = bigEndian ? 
+			(this.getByteAt(offset) << 8) + this.getByteAt(offset + 1)
+			: (this.getByteAt(offset + 1) << 8) + this.getByteAt(offset)
+		if (short < 0) short += 65536;
+		return short;
+	}
+	this.getSShortAt = function(offset, bigEndian) {
+		var ushort = this.getShortAt(offset, bigEndian);
+		if (ushort > 32767)
+			return ushort - 65536;
+		else
+			return ushort;
+	}
+	this.getLongAt = function(offset, bigEndian) {
+		var byte1 = this.getByteAt(offset),
+			byte2 = this.getByteAt(offset + 1),
+			byte3 = this.getByteAt(offset + 2),
+			byte4 = this.getByteAt(offset + 3);
+
+		var long = bigEndian ? 
+			(((((byte1 << 8) + byte2) << 8) + byte3) << 8) + byte4
+			: (((((byte4 << 8) + byte3) << 8) + byte2) << 8) + byte1;
+		if (long < 0) long += 4294967296;
+		return long;
+	}
+	this.getSLongAt = function(offset, bigEndian) {
+		var ulong = this.getLongAt(offset, bigEndian);
+		if (ulong > 2147483647)
+			return ulong - 4294967296;
+		else
+			return ulong;
+	}
+	this.getStringAt = function(offset, length) {
+		var chars = [];
+		for (var i=offset,j=0;i<offset+length;i++,j++) {
+			chars[j] = String.fromCharCode(this.getByteAt(i));
+		}
+		return chars.join("");
+	}
+
+	this.getCharAt = function(offset) {
+		return String.fromCharCode(this.getByteAt(offset));
+	}
+	this.toBase64 = function() {
+		return window.btoa(data);
+	}
+	this.fromBase64 = function(str) {
+		data = window.atob(str);
+	}
+}
+
+
+var BinaryAjax = (function() {
+
+	function createRequest() {
+		var http = null;
+		if (window.XMLHttpRequest) {
+			http = new XMLHttpRequest();
+		} else if (window.ActiveXObject) {
+			http = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		return http;
+	}
+
+	function getHead(url, callback, error) {
+		var http = createRequest();
+		if (http) {
+			if (callback) {
+				if (typeof(http.onload) != "undefined") {
+					http.onload = function() {
+						if (http.status == "200") {
+							callback(this);
+						} else {
+							if (error) error();
+						}
+						http = null;
+					};
+				} else {
+					http.onreadystatechange = function() {
+						if (http.readyState == 4) {
+							if (http.status == "200") {
+								callback(this);
+							} else {
+								if (error) error();
+							}
+							http = null;
+						}
+					};
+				}
+			}
+			http.open("HEAD", url, true);
+			http.send(null);
+		} else {
+			if (error) error();
+		}
+	}
+
+	function sendRequest(url, callback, error, range, acceptRanges, fileSize) {
+		var http = createRequest();
+		if (http) {
+
+			var dataOffset = 0;
+			if (range && !acceptRanges) {
+				dataOffset = range[0];
+			}
+			var dataLen = 0;
+			if (range) {
+				dataLen = range[1]-range[0]+1;
+			}
+
+			if (callback) {
+				if (typeof(http.onload) != "undefined") {
+					http.onload = function() {
+						if (http.status == "200" || http.status == "206" || http.status == "0") {
+							http.binaryResponse = new BinaryFile(http.responseText, dataOffset, dataLen);
+							http.fileSize = fileSize || http.getResponseHeader("Content-Length");
+							callback(http);
+						} else {
+							if (error) error();
+						}
+						http = null;
+					};
+				} else {
+					http.onreadystatechange = function() {
+						if (http.readyState == 4) {
+							if (http.status == "200" || http.status == "206" || http.status == "0") {
+								// IE6 craps if we try to extend the XHR object
+								var res = {
+									status : http.status,
+									// IE needs responseBody, Chrome/Safari needs responseText
+									binaryResponse : new BinaryFile(http.responseBody || http.responseText, dataOffset, dataLen),
+									fileSize : fileSize || http.getResponseHeader("Content-Length")
+								};
+								callback(res);
+							} else {
+								if (error) error();
+							}
+							http = null;
+						}
+					};
+				}
+			}
+			http.open("GET", url, true);
+
+			if (http.overrideMimeType) http.overrideMimeType('text/plain; charset=x-user-defined');
+
+			if (range && acceptRanges) {
+				http.setRequestHeader("Range", "bytes=" + range[0] + "-" + range[1]);
+			}
+
+			http.setRequestHeader("If-Modified-Since", "Sat, 1 Jan 1970 00:00:00 GMT");
+
+			http.send(null);
+		} else {
+			if (error) error();
+		}
+	}
+
+	return function(url, callback, error, range) {
+		if (range) {
+			getHead(
+				url, 
+				function(http) {
+					var length = parseInt(http.getResponseHeader("Content-Length"),10);
+					var acceptRanges = http.getResponseHeader("Accept-Ranges");
+
+					var start, end;
+					start = range[0];
+					if (range[0] < 0) 
+						start += length;
+					end = start + range[1] - 1;
+
+					sendRequest(url, callback, error, [start, end], (acceptRanges == "bytes"), length);
+				}
+			);
+		} else {
+			sendRequest(url, callback, error);
+		}
+	}
+
+}());
+
+
+document.write(
+	"<script type='text/vbscript'>\r\n"
+	+ "Function IEBinary_getByteAt(strBinary, offset)\r\n"
+	+ "	IEBinary_getByteAt = AscB(MidB(strBinary,offset+1,1))\r\n"
+	+ "End Function\r\n"
+	+ "Function IEBinary_getLength(strBinary)\r\n"
+	+ "	IEBinary_getLength = LenB(strBinary)\r\n"
+	+ "End Function\r\n"
+	+ "</script>\r\n"
+);
