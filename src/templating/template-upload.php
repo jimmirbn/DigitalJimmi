@@ -5,7 +5,7 @@ Template Name: Upload
 get_header(); ?>
 
 <div class="upload-container">
-            <profile-picture></profile-picture>
+    <upload-image></upload-image>
 </div>
 
 <?php get_footer(); ?>

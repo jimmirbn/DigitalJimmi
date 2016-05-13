@@ -42,18 +42,19 @@ function DataService($q, $http) {
 
 
     api.updateUser = function UpdateUser(formData) {
-        console.log("formdata", formData);
         return sendRequest({
             action: 'gateway',
             task: 'updateUser',
-            // email: formData.email,
-            // store_id: formData.store_id,
             picture_base64: formData.picture_base64,
             picture_orientation: formData.picture_orientation,
-            // token: $cookies.get('token')
         });
     };
 
+    api.loadImages = function loadImages() {
+        return sendRequest({
+            action: 'loadimages',
+        });
+    };
 
     return api;
 }

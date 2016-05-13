@@ -48,7 +48,7 @@ switch($_SERVER['HTTP_HOST']) {
         define('DB_USER', 'digitaljim_com');
         define('DB_PASSWORD', 'Jimmirbn16');
         define('DB_HOST', 'mysql18.unoeuro.com');
-        define('ENVIRONMENT', 'production');
+        define('ENVIRONMENT', 'local');
         define('WP_DEBUG', false);
 
         define('WP_CONTENT_URL', $url.'/content');

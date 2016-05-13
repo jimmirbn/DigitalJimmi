@@ -10,13 +10,12 @@ angular.element(document).ready(function(event) {
 
     angular.module('digital', modules)
 
-    // .controller('HeaderCtrl', HeaderCtrl)
-
     .factory('DataService', DataService)
 
-    .directive('profileForm', profileForm)
-    .directive('profilePicture', profilePicture)
-    // .directive('resolver', resolver)
+    .controller('MainCtrl', MainCtrl)
+    // .directive('profileForm', profileForm)
+    .directive('uploadImage', uploadImage)
+    .directive('slider', slider)
 
     .run(run);
 
@@ -37,6 +36,66 @@ function run() {
     }
     ]);
 }
+/**
+ * @ngInject
+ */
+
+
+function MainCtrl($scope, DataService) {
+    var vm = this;
+    // vm.images = {};
+
+    // vm.imageNr;
+    // vm.totalImages = 0;
+
+    // DataService.loadImages(vm.imageNr)
+    //     .then(angular.bind(this, onImageSuccess), angular.bind(this, onImageError));
+
+
+    // function onImageSuccess(response) {
+    //     vm.images = response.data.images;
+    //     console.log(vm.images);
+    //     // $ionicSlideBoxDelegate.update();
+    //     // var exist;
+    //     // if (vm.imagesNY !== null) {
+    //     //     exist = vm.images.indexOf(vm.imagesNY.profile_picture);
+    //     // }
+    //     // // console.log(exist);
+    //     // if (exist === -1 && vm.imagesNY !== null) {
+    //     //     vm.images.push(vm.imagesNY.profile_picture);
+    //     //     // console.log("images array", images);
+
+    //     //     elem.slick('slickAdd', '<div class="slide" style="background-image:url(' + vm.imagesNY.profile_picture + ');"><button id="' + vm.imagesNY.id + '" class="deleteBtn" type="button">DELETE</button></div>', true);
+
+    //     //     setTimeout(function() {
+    //     //         vm.getImages(pageNr + 1);
+    //     //     }, 10000);
+    //     // } else if (exist !== -1 || vm.imagesNY === null) {
+    //     //     slider.slick('slickPlay');
+    //     //     console.log("Trying again", pageNr);
+    //     //     setTimeout(function() {
+    //     //         vm.getImages(pageNr);
+    //     //     }, 10000);
+    //     // }
+
+    //     setTimeout(function() {
+    //         // vm.getImages(imageNr);
+    //     }, 10000);
+    // }
+
+    // vm.getImages = function getImages() {
+    //     DataService.loadImages()
+    //         .then(angular.bind(this, onImageSuccess), angular.bind(this, onImageError));
+    // }
+
+
+    // function onImageError(response) {
+    //     console.log("error", response);
+    // }
+
+}
+MainCtrl.$inject = ['$scope', 'DataService'];
+
 /**
  * @ngInject
  */
@@ -128,19 +187,97 @@ function profileForm() {
 /**
  * @ngInject
  */
-function profilePicture() {
+function slider() {
 
-    function ProfilePictureCtrl($scope, DataService, $attrs) {
+    function SliderCtrl($scope, DataService, $element, $timeout) {
+
+        var elem = $element;
+        var vm = this;
+
+        var imageNr = 0;
+        var slider = elem;
+        vm.slideIndex;
+
+        vm.isLoading = false;
+
+        slider.slick({
+            infinite: true,
+            speed: 500,
+            autoplaySpeed: 5000,
+            fade: true,
+            cssEase: 'linear',
+            slidesToShow: 1,
+            autoplay: true,
+            pauseOnHover: false
+        });
+
+        DataService.loadImages()
+            .then(angular.bind(this, onImageSuccess), angular.bind(this, onImageError));
+
+        function onImageSuccess(response) {
+            vm.totalOrigImages = parseInt(elem.attr('orig'));
+            var newImages = response.data.images;
+            var newItemsLength = newImages.length;
+            var newItems = newImages.splice(vm.totalOrigImages, newItemsLength);
+            if (newItemsLength !== vm.totalOrigImages) {
+                slider.slick('slickPause');
+                vm.isLoading = true;
+                if (vm.totalOrigImages !== 0) {
+                    vm.slideIndex = elem.find('.slick-active').data('slick-index');
+                }
+                _.each(newItems, function(item, index) {
+                    var newImageUrl = item['profile_picture'];
+                    var newImageId = item['id'];
+                    if (vm.totalOrigImages === 0) {
+                        slider.slick('slickAdd', '<div class="slide" style="background-image:url(' + newImageUrl + ');"><button id="' + newImageId + '" class="deleteBtn" type="button">DELETE</button></div>');
+                    } else {
+                        slider.slick('slickAdd', '<div class="slide" style="background-image:url(' + newImageUrl + ');"><button id="' + newImageId + '" class="deleteBtn" type="button">DELETE</button></div>', 0);
+                    }
+
+                });
+                slider.slick('slickPause');
+
+                if (vm.totalOrigImages !== 0) {
+                    slider.slick('slickGoTo', parseInt(vm.slideIndex + 1));
+                }
+                slider.slick('slickPlay');
+                vm.isLoading = false;
+
+                elem.attr('orig', newItemsLength);
+            }
+
+            $timeout(function() {
+                DataService.loadImages()
+                    .then(angular.bind(this, onImageSuccess), angular.bind(this, onImageError));
+            }, 3000);
+        }
+
+        function onImageError(response) {
+            console.log("error", response);
+        }
+
+    }
+
+    return {
+        controller: SliderCtrl,
+        controllerAs: 'sliderctrl',
+        bindToController: true,
+        restrict: 'AE',
+    }
+}
+
+/**
+ * @ngInject
+ */
+function uploadImage() {
+
+    function UploadImageCtrl($scope, DataService, $attrs) {
 
         var vm = this;
         vm.base64 = "";
         this.message = undefined;
         this.isSubmitting = false;
-        this.storeID = null;
-        this.stores = {};
-        this.btnLabel = "BLIV 5 STAR HOST";
 
-        // if ($state.current.name == "profile") this.btnLabel = "OPDATER PROFIL";
 
         this.user = {};
         $attrs.$observe("src", function(src) {
@@ -285,6 +422,7 @@ function profilePicture() {
         }
 
         function onProfileError(error) {
+            console.log(error);
             this.message = "Der opstod en fejl - prøv igen.";
             this.isSubmitting = false;
         }
@@ -293,28 +431,28 @@ function profilePicture() {
     // TODO ng-model så det er nemt at få fat i base64
     return {
         restrict: 'E',
-        controller: ProfilePictureCtrl,
-        controllerAs: 'profilePictureCtrl',
+        controller: UploadImageCtrl,
+        controllerAs: 'uploadimagectrl',
         bindToController: true,
         template: [
             '<div class="upload-foto">',
-            '<div ng-class="{active: profilePictureCtrl.isSubmitting}" class="sk-fading-circle spinner">',
-              '<div class="sk-circle1 sk-circle"></div>',
-              '<div class="sk-circle2 sk-circle"></div>',
-              '<div class="sk-circle3 sk-circle"></div>',
-              '<div class="sk-circle4 sk-circle"></div>',
-              '<div class="sk-circle5 sk-circle"></div>',
-              '<div class="sk-circle6 sk-circle"></div>',
-              '<div class="sk-circle7 sk-circle"></div>',
-              '<div class="sk-circle8 sk-circle"></div>',
-              '<div class="sk-circle9 sk-circle"></div>',
-              '<div class="sk-circle10 sk-circle"></div>',
-              '<div class="sk-circle11 sk-circle"></div>',
-              '<div class="sk-circle12 sk-circle"></div>',
+            '<div ng-class="{active: uploadimagectrl.isSubmitting}" class="sk-fading-circle spinner">',
+            '<div class="sk-circle1 sk-circle"></div>',
+            '<div class="sk-circle2 sk-circle"></div>',
+            '<div class="sk-circle3 sk-circle"></div>',
+            '<div class="sk-circle4 sk-circle"></div>',
+            '<div class="sk-circle5 sk-circle"></div>',
+            '<div class="sk-circle6 sk-circle"></div>',
+            '<div class="sk-circle7 sk-circle"></div>',
+            '<div class="sk-circle8 sk-circle"></div>',
+            '<div class="sk-circle9 sk-circle"></div>',
+            '<div class="sk-circle10 sk-circle"></div>',
+            '<div class="sk-circle11 sk-circle"></div>',
+            '<div class="sk-circle12 sk-circle"></div>',
             '</div>',
-            '<p class="message" ng-class="{active: profilePictureCtrl.message}" ng-bind="profilePictureCtrl.message"></p>',
+            '<p class="message" ng-class="{active: uploadimagectrl.message}" ng-bind="uploadimagectrl.message"></p>',
             '<div id="filedrag" class="upload-foto__image"></div>',
-            '<div ng-class="{done: profilePictureCtrl.message, submitting: profilePictureCtrl.isSubmitting}" class="fileUpload btn btn-primary">',
+            '<div ng-class="{done: uploadimagectrl.message, submitting: uploadimagectrl.isSubmitting}" class="fileUpload btn btn-primary">',
             '<span>Upload billede</span>',
             '<input type="file" class="upload" id="fileselect" accept="image/*">',
             '</div>',
@@ -369,380 +507,23 @@ function DataService($q, $http) {
 
 
     api.updateUser = function UpdateUser(formData) {
-        console.log("formdata", formData);
         return sendRequest({
             action: 'gateway',
             task: 'updateUser',
-            // email: formData.email,
-            // store_id: formData.store_id,
             picture_base64: formData.picture_base64,
             picture_orientation: formData.picture_orientation,
-            // token: $cookies.get('token')
         });
     };
 
+    api.loadImages = function loadImages() {
+        return sendRequest({
+            action: 'loadimages',
+        });
+    };
 
     return api;
 }
 DataService.$inject = ['$q', '$http'];
-
-/* ========================================================================
- * Bootstrap: modal.js v3.3.4
- * http://getbootstrap.com/javascript/#modals
- * ========================================================================
- * Copyright 2011-2015 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
- * ======================================================================== */
-
-
-+ function($) {
-    'use strict';
-
-    // MODAL CLASS DEFINITION
-    // ======================
-
-    var Modal = function(element, options) {
-        this.options = options
-        this.$body = $(document.body)
-        this.$element = $(element)
-        this.$dialog = this.$element.find('.modal-dialog')
-        this.$backdrop = null
-        this.isShown = null
-        this.originalBodyPad = null
-        this.scrollbarWidth = 0
-        this.ignoreBackdropClick = false
-
-        if (this.options.remote) {
-            this.$element
-                .find('.modal-content')
-                .load(this.options.remote, $.proxy(function() {
-                    this.$element.trigger('loaded.bs.modal')
-                }, this))
-        }
-    }
-
-    Modal.VERSION = '3.3.4'
-
-    Modal.TRANSITION_DURATION = 300
-    Modal.BACKDROP_TRANSITION_DURATION = 150
-
-    Modal.DEFAULTS = {
-        backdrop: true,
-        keyboard: true,
-        show: true
-    }
-
-    Modal.prototype.toggle = function(_relatedTarget) {
-        return this.isShown ? this.hide() : this.show(_relatedTarget)
-    }
-
-    Modal.prototype.show = function(_relatedTarget) {
-        var that = this
-        var e = $.Event('show.bs.modal', { relatedTarget: _relatedTarget })
-
-        this.$element.trigger(e)
-
-        if (this.isShown || e.isDefaultPrevented()) return
-
-        this.isShown = true
-
-        this.checkScrollbar()
-        this.setScrollbar()
-        this.$body.addClass('modal-open')
-
-        this.escape()
-        this.resize()
-
-        this.$element.on('click.dismiss.bs.modal', '[data-dismiss="modal"]', $.proxy(this.hide, this))
-
-        this.$dialog.on('mousedown.dismiss.bs.modal', function() {
-            that.$element.one('mouseup.dismiss.bs.modal', function(e) {
-                if ($(e.target).is(that.$element)) that.ignoreBackdropClick = true
-            })
-        })
-
-        this.backdrop(function() {
-            var transition = $.support.transition && that.$element.hasClass('fade')
-
-            if (!that.$element.parent().length) {
-                that.$element.appendTo(that.$body) // don't move modals dom position
-            }
-
-            that.$element
-                .show()
-                .scrollTop(0)
-
-            that.adjustDialog()
-
-            if (transition) {
-                that.$element[0].offsetWidth // force reflow
-            }
-
-            that.$element
-                .addClass('in')
-                .attr('aria-hidden', false)
-
-            that.enforceFocus()
-
-            var e = $.Event('shown.bs.modal', { relatedTarget: _relatedTarget })
-
-            transition ?
-                that.$dialog // wait for modal to slide in
-                .one('bsTransitionEnd', function() {
-                    that.$element.trigger('focus').trigger(e)
-                })
-                .emulateTransitionEnd(Modal.TRANSITION_DURATION) :
-                that.$element.trigger('focus').trigger(e)
-        })
-    }
-
-    Modal.prototype.hide = function(e) {
-        if (e) e.preventDefault()
-
-        e = $.Event('hide.bs.modal')
-
-        this.$element.trigger(e)
-
-        if (!this.isShown || e.isDefaultPrevented()) return
-
-        this.isShown = false
-
-        this.escape()
-        this.resize()
-
-        $(document).off('focusin.bs.modal')
-
-        this.$element
-            .removeClass('in')
-            .attr('aria-hidden', true)
-            .off('click.dismiss.bs.modal')
-            .off('mouseup.dismiss.bs.modal')
-
-        this.$dialog.off('mousedown.dismiss.bs.modal')
-
-        $.support.transition && this.$element.hasClass('fade') ?
-            this.$element
-            .one('bsTransitionEnd', $.proxy(this.hideModal, this))
-            .emulateTransitionEnd(Modal.TRANSITION_DURATION) :
-            this.hideModal()
-    }
-
-    Modal.prototype.enforceFocus = function() {
-        $(document)
-            .off('focusin.bs.modal') // guard against infinite focus loop
-            .on('focusin.bs.modal', $.proxy(function(e) {
-                if (this.$element[0] !== e.target && !this.$element.has(e.target).length) {
-                    this.$element.trigger('focus')
-                }
-            }, this))
-    }
-
-    Modal.prototype.escape = function() {
-        if (this.isShown && this.options.keyboard) {
-            this.$element.on('keydown.dismiss.bs.modal', $.proxy(function(e) {
-                e.which == 27 && this.hide()
-            }, this))
-        } else if (!this.isShown) {
-            this.$element.off('keydown.dismiss.bs.modal')
-        }
-    }
-
-    Modal.prototype.resize = function() {
-        if (this.isShown) {
-            $(window).on('resize.bs.modal', $.proxy(this.handleUpdate, this))
-        } else {
-            $(window).off('resize.bs.modal')
-        }
-    }
-
-    Modal.prototype.hideModal = function() {
-        var that = this
-        this.$element.hide()
-        this.backdrop(function() {
-            that.$body.removeClass('modal-open')
-            that.resetAdjustments()
-            that.resetScrollbar()
-            that.$element.trigger('hidden.bs.modal')
-        })
-    }
-
-    Modal.prototype.removeBackdrop = function() {
-        this.$backdrop && this.$backdrop.remove()
-        this.$backdrop = null
-    }
-
-    Modal.prototype.backdrop = function(callback) {
-        var that = this
-        var animate = this.$element.hasClass('fade') ? 'fade' : ''
-
-        if (this.isShown && this.options.backdrop) {
-            var doAnimate = $.support.transition && animate
-
-            this.$backdrop = $('<div class="modal-backdrop ' + animate + '" />')
-                .appendTo(this.$body)
-
-            this.$element.on('click.dismiss.bs.modal', $.proxy(function(e) {
-                if (this.ignoreBackdropClick) {
-                    this.ignoreBackdropClick = false
-                    return
-                }
-                if (e.target !== e.currentTarget) return
-                this.options.backdrop == 'static' ? this.$element[0].focus() : this.hide()
-            }, this))
-
-            if (doAnimate) this.$backdrop[0].offsetWidth // force reflow
-
-            this.$backdrop.addClass('in')
-
-            if (!callback) return
-
-            doAnimate ?
-                this.$backdrop
-                .one('bsTransitionEnd', callback)
-                .emulateTransitionEnd(Modal.BACKDROP_TRANSITION_DURATION) :
-                callback()
-
-        } else if (!this.isShown && this.$backdrop) {
-            this.$backdrop.removeClass('in')
-
-            var callbackRemove = function() {
-                that.removeBackdrop()
-                callback && callback()
-            }
-            $.support.transition && this.$element.hasClass('fade') ?
-                this.$backdrop
-                .one('bsTransitionEnd', callbackRemove)
-                .emulateTransitionEnd(Modal.BACKDROP_TRANSITION_DURATION) :
-                callbackRemove()
-
-        } else if (callback) {
-            callback()
-        }
-    }
-
-    // these following methods are used to handle overflowing modals
-
-    Modal.prototype.handleUpdate = function() {
-        this.adjustDialog()
-    }
-
-    Modal.prototype.adjustDialog = function() {
-        var modalIsOverflowing = this.$element[0].scrollHeight > document.documentElement.clientHeight
-
-        this.$element.css({
-            paddingLeft: !this.bodyIsOverflowing && modalIsOverflowing ? this.scrollbarWidth : '',
-            paddingRight: this.bodyIsOverflowing && !modalIsOverflowing ? this.scrollbarWidth : ''
-        })
-    }
-
-    Modal.prototype.resetAdjustments = function() {
-        this.$element.css({
-            paddingLeft: '',
-            paddingRight: ''
-        })
-    }
-
-    Modal.prototype.checkScrollbar = function() {
-        var fullWindowWidth = window.innerWidth
-        if (!fullWindowWidth) { // workaround for missing window.innerWidth in IE8
-            var documentElementRect = document.documentElement.getBoundingClientRect()
-            fullWindowWidth = documentElementRect.right - Math.abs(documentElementRect.left)
-        }
-        this.bodyIsOverflowing = document.body.clientWidth < fullWindowWidth
-        this.scrollbarWidth = this.measureScrollbar()
-    }
-
-    Modal.prototype.setScrollbar = function() {
-        var bodyPad = parseInt((this.$body.css('padding-right') || 0), 10)
-        this.originalBodyPad = document.body.style.paddingRight || ''
-        if (this.bodyIsOverflowing) this.$body.css('padding-right', bodyPad + this.scrollbarWidth)
-    }
-
-    Modal.prototype.resetScrollbar = function() {
-        this.$body.css('padding-right', this.originalBodyPad)
-    }
-
-    Modal.prototype.measureScrollbar = function() { // thx walsh
-        var scrollDiv = document.createElement('div')
-        scrollDiv.className = 'modal-scrollbar-measure'
-        this.$body.append(scrollDiv)
-        var scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth
-        this.$body[0].removeChild(scrollDiv)
-        return scrollbarWidth
-    }
-
-
-    // MODAL PLUGIN DEFINITION
-    // =======================
-
-    function Plugin(option, _relatedTarget) {
-        return this.each(function() {
-            var $this = $(this)
-            var data = $this.data('bs.modal')
-            var options = $.extend({}, Modal.DEFAULTS, $this.data(), typeof option == 'object' && option)
-
-            if (!data) $this.data('bs.modal', (data = new Modal(this, options)))
-            if (typeof option == 'string') data[option](_relatedTarget)
-            else if (options.show) data.show(_relatedTarget)
-        })
-    }
-
-    var old = $.fn.modal
-
-    $.fn.modal = Plugin
-    $.fn.modal.Constructor = Modal
-
-
-    // MODAL NO CONFLICT
-    // =================
-
-    $.fn.modal.noConflict = function() {
-        $.fn.modal = old
-        return this
-    }
-
-
-    // MODAL DATA-API
-    // ==============
-
-    $(document).on('click.bs.modal.data-api', '[data-toggle="modal"]', function(e) {
-        var $this = $(this)
-        var href = $this.attr('href')
-        var $target = $($this.attr('data-target') || (href && href.replace(/.*(?=#[^\s]+$)/, ''))) // strip for ie7
-        var option = $target.data('bs.modal') ? 'toggle' : $.extend({ remote: !/#/.test(href) && href }, $target.data(), $this.data())
-
-        if ($this.is('a')) e.preventDefault()
-
-        $target.one('show.bs.modal', function(showEvent) {
-            if (showEvent.isDefaultPrevented()) return // only register focus restorer if modal will actually get shown
-            $target.one('hidden.bs.modal', function() {
-                $this.is(':visible') && $this.trigger('focus')
-            })
-        })
-        Plugin.call($target, option, this)
-    })
-
-}(jQuery);
-
-function GetIEVersion() {
-    var sAgent = window.navigator.userAgent;
-    var Idx = sAgent.indexOf("MSIE");
-
-    // If IE, return version number.
-    if (Idx > 0)
-        return parseInt(sAgent.substring(Idx + 5, sAgent.indexOf(".", Idx)));
-
-    // If IE 11 then look for Updated user agent string.
-    else if (!!navigator.userAgent.match(/Trident\/7\./))
-        return 11;
-    else
-        return 0; //It is not IE
-}
-
-if (GetIEVersion() > 0) {
-    console.log("This is IE " + GetIEVersion());
-    $('#ieModal').modal('show');
-};
 
 var isMobile = {
     Android: function() {
@@ -897,14 +678,6 @@ function openModal() {
                 },
                 onComplete: openFinish
             });
-
-            // circle__inner.addClass('active').animate({
-            //     width: "700px",
-            //     height: "700px",
-            //     marginLeft: "-350px",
-            //     marginTop: "-350px",
-            // }, 1000);
-            // circle__innerImage.removeClass('active').addClass('not-active');
             circleSvg.css('display', 'none');
             circleComponent.css('display', 'none');
 
@@ -950,18 +723,6 @@ function openModal() {
             });
 
         }
-        // circle__inner.one(animationEvent, function() {
-        //     close.addClass('active');
-        //     if (self.hasClass('circle__component--1')) {
-        //         circle1.addClass('active');
-        //     }
-        //     if (self.hasClass('circle__component--2')) {
-        //         circle2.addClass('active');
-        //     }
-        //     if (self.hasClass('circle__component--3')) {
-        //         circle3.addClass('active');
-        //     }
-        // });
         close.addClass('active');
         if (self.hasClass('circle__component--1')) {
             circle1.addClass('active');
@@ -1009,11 +770,6 @@ function closeCircle() {
         circle__inner.one(animationEvent, function() {
             circle__inner.removeClass('closed');
             circle.removeClass('active');
-            // circle__innerImage.removeClass('not-active').addClass('active');
-            // setTimeout(function() {
-            //     intro.addClass('active');
-            //     intro2.addClass('active');
-            // }, 600);
         });
     } else {
         modalOpen = false;
@@ -1060,91 +816,5 @@ $('.modal-cover').click(function(e) {
         closeCircle();
     }
 });
-
-var getUrlParameter = function getUrlParameter(sParam) {
-    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-        sURLVariables = sPageURL.split('&'),
-        sParameterName,
-        i;
-
-    for (i = 0; i < sURLVariables.length; i++) {
-        sParameterName = sURLVariables[i].split('=');
-
-        if (sParameterName[0] === sParam) {
-            return sParameterName[1] === undefined ? true : sParameterName[1];
-        }
-    }
-};
-
-
-var slider = $('.slider-container');
-
-slider.slick({
-    infinite: true,
-    speed: 500,
-    autoplaySpeed: 5000,
-    fade: true,
-    cssEase: 'linear',
-    slidesToShow: 1,
-    autoplay: false,
-    pauseOnHover: false
-});
-var images = [];
-
-var pageNr = 0;
-if (slider.length) {
-
-    function getImages(pageNr) {
-        console.log("Image", pageNr);
-
-        $.ajax({
-            method: "POST",
-            url: ajaxUrl,
-            data: { action: "loadimages", imageNr: pageNr },
-            dataType: "json",
-        }).done(function(data) {
-            // console.log(data);
-            // console.log("images array", images);
-
-            var exist;
-            if (data.data.images !== null) {
-                exist = images.indexOf(data.data.images.profile_picture);
-
-            }
-            // console.log(exist);
-            if (exist === -1 && data.data.images !== null) {
-                images.push(data.data.images.profile_picture);
-                // console.log("images array", images);
-
-                slider.slick('slickAdd', '<div class="slide" style="background-image:url(' + data.data.images.profile_picture + ');"></div>', true);
-
-                setTimeout(function() {
-                    getImages(pageNr + 1);
-                }, 10000);
-            } else if (exist !== -1 || data.data.images === null) {
-                slider.slick('slickPlay');
-                console.log("Trying again", pageNr);
-                setTimeout(function() {
-                    getImages(pageNr);
-                }, 10000);
-            }
-
-        });
-    }
-    getImages(pageNr);
-}
-
-
-
-var konf = getUrlParameter('response');
-
-if (konf === 'fu-sent') {
-    $('.fileUpload').css('display', 'none');
-    $('.ugc-notice').text('Billedet er uploadet');
-    $('.ugc-notice').append('<img src="https://media.giphy.com/media/TAoXY6URAcUbS/giphy.gif">')
-    setTimeout(function() {
-        window.location = window.location.pathname;
-    }, 2000);
-}
 
 })();

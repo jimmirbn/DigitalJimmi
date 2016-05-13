@@ -1,33 +1,55 @@
 @charset "utf-8";
 //-----------------------------------------
-  // Utils
+// Utils
 // -------------------------------------------
 @import "../../bower_components/bourbon/app/assets/stylesheets/bourbon";
-@import "../../bower_components/slick-carousel/slick/slick.scss";
 @import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/variables";
 @import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/mixins";
 @import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/buttons";
+@import "../../bower_components/slick-carousel/slick/slick";
+$base-line-height: 24px;
+$white: rgb(255, 255, 255);
+$off-white: rgba(#000, 0.2);
+$spin-duration: 1s;
+$pulse-duration: 750ms;
+
+@include keyframes(spin) {
+    0% {
+        @include transform(rotate(0deg));
+    }
+    100% {
+        @include transform(rotate(360deg));
+    }
+}
+
+.loading {
+    border-radius: 50%;
+    width: $base-line-height;
+    height: $base-line-height;
+    border: .25rem solid $off-white;
+    border-top-color: $white;
+    animation: spin $spin-duration infinite linear;
+    opacity: 0;
+    &.active{
+      opacity: 1;
+    }
+}
+
+// 
 @import "utils/variables";
 @import "utils/mixins";
 @import "utils/helpers";
-
 // -----------------------------------------
-  // Base
+// Base
 //-------------------------------------------
-
 //-----------------------------------------
-  // Pages
+// Pages
 // -------------------------------------------
 // 
-
-
 //-----------------------------------------
-  // Layout
+// Layout
 // -------------------------------------------
-
-
 //-----------------------------------------
-  // Modules/Components
+// Modules/Components
 // -------------------------------------------
-
 @import "inbox";

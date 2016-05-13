@@ -52,17 +52,17 @@ module.exports = function(grunt) {
             },
             vendors: {
                 src: [
-                    '<%= src.bower %>/lodash/lodash.min.js',
                     '<%= src.bower %>/jquery/dist/jquery.js',
-                    '<%= src.bower %>/matchMedia/matchMedia.js',
-                    '<%= src.bower %>/fastclick/lib/fastclick.js',
                     '<%= src.bower %>/angular/angular.js',
-                    '<%= src.bower %>/angular-sanitize/angular-sanitize.js',
-                    '<%= src.bower %>/angular-animate/angular-animate.min.js',
-                    '<%= src.bower %>/slick-carousel/slick/slick.min.js',
+                    '<%= src.bower %>/underscore/underscore.js',
+                    '<%= src.bower %>/lodash/lodash.min.js',
+                    '<%= src.bower %>/matchMedia/matchMedia.js',
+                    '<%= src.bower %>/slick-carousel/slick/slick.js',
+                    '<%= src.bower %>/angular-slick/dist/slick.js',
                     '<%= src.js %>/vendors/exif.js',
                     '<%= src.bower %>/object-fit/dist/polyfill.object-fit.js',
                     '<%= src.bower %>/binaryajax/binaryajax.js',
+                    '<%= src.bower %>/bootstrap-sass/assets/javascript/bootstrap/modal.js',
 
                     
                 ],

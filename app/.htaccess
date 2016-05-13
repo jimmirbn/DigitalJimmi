@@ -1,13 +1,5 @@
 # IF image file is not on STAGING let's check production
 RewriteEngine on
-RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} !-f
-RewriteCond http://digitaljimmi.com%{REQUEST_URI} -f
-RewriteRule \.(gif|jpe?g|png|bmp) http://digittaljimmi.com%{REQUEST_URI} [L,R=301]
-
-# IF image file is not on PROD let's check staging
-RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} !-f
-#RewriteCond http://digitaljimmi.com.com%{REQUEST_URI} -f
-RewriteRule \.(gif|jpe?g|png|bmp) http://digitaljimmi.com%{REQUEST_URI} [L,R=301]
 <IfModule mod_headers.c> 
   Header set X-UA-Compatible "IE=Edge,chrome=1" 
 </IfModule>

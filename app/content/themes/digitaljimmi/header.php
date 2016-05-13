@@ -25,6 +25,6 @@
     <!-- css + javascript -->
     <?php wp_head(); ?>
 </head>
-<body <?php body_class();?> id="ng-app">
+<body <?php body_class();?> ng-controller="MainCtrl as main" id="ng-app">
 
 

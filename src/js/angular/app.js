@@ -4,13 +4,12 @@ angular.element(document).ready(function(event) {
 
     angular.module('digital', modules)
 
-    // .controller('HeaderCtrl', HeaderCtrl)
-
     .factory('DataService', DataService)
 
-    .directive('profileForm', profileForm)
-    .directive('profilePicture', profilePicture)
-    // .directive('resolver', resolver)
+    .controller('MainCtrl', MainCtrl)
+    // .directive('profileForm', profileForm)
+    .directive('uploadImage', uploadImage)
+    .directive('slider', slider)
 
     .run(run);
 

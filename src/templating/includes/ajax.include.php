@@ -8,69 +8,24 @@ class LoadImages {
 		add_action( 'wp_ajax_loadimages', array( $this, 'loadimages' ) );
 	}
 
-	/**
-	 * The AJAX method
-	 *
-	 * @return JSON
-	 * @author Jens Sogaard
-	 **/
 	public function loadimages()
 	{
-		$imageNr = isset($_POST['imageNr']) ? $_POST['imageNr'] : '';
-		
-		// $itemsPerPage = isset($_POST['itemsPerPage']) ? $_POST['itemsPerPage'] : 5;
 
 		$response = array(
-			'images' => $this->getImages($imageNr)
+			'images' => $this->getImages()
 		);
 
 		$this->jsonResponse(1, "", $response);
 	}
 
-	/**
-	 * Returns the projects
-	 *
-	 * @return Object
-	 * @author Jens Sogaard
-	 **/
-	private function getImages($imageNr)
+	private function getImages()
 	{
 		global $wpdb;
 
-		$image = $wpdb->get_results("SELECT * FROM user");
+		$images = $wpdb->get_results("SELECT *, (SELECT COUNT(*) FROM image_slider) as total FROM image_slider");
 
-	 	return $image[$imageNr];
+	 	return $images;
 
-		// $args = array(
-		// 	// 'cache_results' => true,
-		// 	'post_status' => 'any',
-		// 	'post_type' => 'attachment',
-		// 	'post_parent' => 54,
-		// 	'post_mime_type' => 'image'
-		// );
-		// $args['posts_per_page'] = $itemsPerPage;
-		// $args['paged'] = $page;
-
-		// // print_r($args); 
-
-		// $results = new WP_Query( $args );
-
-		// //print_r($results);
-
-		// $images = array();
-		// foreach($results->posts as $postItem){
-			
-		// 	$images[] = array(
-			
-		// 		'image' =>  wp_get_attachment_url($postItem->ID)
-		// 	);
-		// }
-
-		// return array(
-		// 	'images' => $images,
-		// 	'totalPages' => $results->max_num_pages,
-		// 	'currentPage' => $args['paged']
-		// );
 	}
 
 	private function jsonResponse($status, $message = "",$data = null)
@@ -89,19 +44,38 @@ class LoadImages {
 		die();
 	}
 }
-$projectsAJAX = new LoadImages();
 
-if(isset($_GET['testProjects']) && $_GET['testProjects'] == 1){
-	$projectsAJAX->loadimages();
-} 
+$loadImages = new LoadImages();
+
+class DeleteImage {
+
+	function __construct()
+	{
+		add_action( 'wp_ajax_nopriv_deleteImage', array( $this, 'deleteImage' ) );
+		add_action( 'wp_ajax_deleteImage', array( $this, 'deleteImage' ) );
+	}
+
+
+	public function deleteImage()
+	{
+		global $wpdb;
+		
+		$imageId = isset($_POST['imageId']) ? $_POST['imageId'] : '';
+
+		$image = $wpdb->delete('image_slider', array( 'ID' => $imageId ));
+
+		if($image === 'false' || $image === false){
+			return false;
+		}else{
+	 		return $image;
+		}
+	}
+}
+
+$deleteImage = new DeleteImage();
+
 Class CPH5starHost {
-private $userTable = 'user';
-/**
-	 * Update a user
-	 *
-	 * @return boolean
-	 * @author Jens Sogaard
-	 **/
+private $userTable = 'image_slider';
 	public function updateUser($params)
 	{
 		if($params['picture_base64'] != ""){
@@ -116,24 +90,6 @@ private $userTable = 'user';
 		$allowedFields = array('profile_picture');
 		
 		global $wpdb;
-
-		// $fields = array();
-		// $fieldTypes = array();
-		
-		// foreach($params as $k => $v){
-		// 	if(in_array($k, $allowedFields)){
-		// 		$fields[$k] = $v;
-		// 		$fieldTypes[] = '%s';
-		// 	}
-		// }
-
-		// $result = $wpdb->update( 
-		// 	$this->userTable,
-		// 	$fields, 
-		// 	array('id' => $userId),
-		// 	$fieldTypes,
-		// 	array('%s')
-		// );	
 
 		$result = $wpdb->insert( 
 				$this->userTable,
@@ -257,6 +213,7 @@ private $userTable = 'user';
 
 add_action( 'wp_ajax_nopriv_gateway', 'gateway' );
 add_action( 'wp_ajax_gateway', 'gateway' );
+
 function gateway() {
 
 	$task = isset($_POST['task']) ? $_POST['task'] : '';
